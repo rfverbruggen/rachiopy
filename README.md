@@ -4,62 +4,62 @@ This python package provides a interface to the Rachio public API.
 
 Usage
 -----
-from rachiopy import Rachio
+`from rachiopy import Rachio
 
 r = Rachio("authtoken")
 
-r.person.getInfo()
+r.person.getInfo()`
 
 Commands
 --------
-Person
+### Person
 
-r.person.getInfo()
+`r.person.getInfo()`
 
-r.person.get(id)
+`r.person.get(id)`
 
-Device
+### Device
 
-r.device.get(id)
+`r.device.get(id)`
 
-r.device.getCurrentSchedule(id)
+`r.device.getCurrentSchedule(id)`
 
-r.device.getEvent(id, starttime, endtime)
+`r.device.getEvent(id, starttime, endtime)`
 
-r.device.getScheduleItem(id)
+`r.device.getScheduleItem(id)`
 
-r.device.getForecast(self, id, units)
+`r.device.getForecast(self, id, units)`
 
-r.device.stopWater(id)
+`r.device.stopWater(id)`
 
-r.device.rainDelay(id, duration)
+`r.device.rainDelay(id, duration)`
 
-r.device.on(id)
+`r.device.on(id)`
 
-r.device.off(id)
+`r.device.off(id)`
 
-Zone
+### Zone
 
-r.zone.start(id, duration)
+`r.zone.start(id, duration)`
 
-r.zone.startMultiple(zones)
+`r.zone.startMultiple(zones)`
 
-Schedulerule
+### Schedulerule
 
-r.schedulerule.skip(id)
+`r.schedulerule.skip(id)`
 
-r.schedulerule.start(id)
+`r.schedulerule.start(id)`
 
-r.schedulerule.seasonalAdjustment(id, adjustment)
+`r.schedulerule.seasonalAdjustment(id, adjustment)`
 
-Notification
+### Notification
 
-r.notification.getWebhookEventType()
+`r.notification.getWebhookEventType()`
 
-r.notification.getDeviceWebhook(id)
+`r.notification.getDeviceWebhook(id)`
 
-r.notification.postWebhook(webhook)
+`r.notification.postWebhook(webhook)`
 
-r.notification.putWebhook(webhook)
+`r.notification.putWebhook(webhook)`
 
-r.notification.deleteWebhook(id)
+`r.notification.deleteWebhook(id)`
