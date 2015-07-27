@@ -4,11 +4,13 @@ This python package provides a interface to the Rachio public API.
 
 Usage
 -----
-`from rachiopy import Rachio
+```python
+from rachiopy import Rachio
 
 r = Rachio("authtoken")
 
-r.person.getInfo()`
+r.person.getInfo()
+```
 
 Commands
 --------
