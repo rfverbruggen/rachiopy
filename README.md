@@ -46,6 +46,8 @@ Commands
 
 `r.zone.startMultiple(zones)`
 
+`r.zone.get(id)`
+
 ### Schedulerule
 
 `r.schedulerule.skip(id)`
@@ -53,6 +55,12 @@ Commands
 `r.schedulerule.start(id)`
 
 `r.schedulerule.seasonalAdjustment(id, adjustment)`
+
+`r.schedulerule.get(id)`
+
+### FlexSchedulerule
+
+`r.flexschedulerule.get(id)`
 
 ### Notification
 
@@ -65,3 +73,5 @@ Commands
 `r.notification.putWebhook(webhook)`
 
 `r.notification.deleteWebhook(id)`
+
+`r.notification.get(id)`

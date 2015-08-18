@@ -21,4 +21,11 @@ class Schedulerule(object):
 		body = { 'id': id, 'adjustment': adjustment }
 
 		(resp, content) = self.rachio.h.request(url, 'PUT', body=body, headers=self.rachio.headers)
-		return content 
+		return content
+
+	def get(self, id):
+		url = '%sschedulerule/%s' % (self.rachio.server, id)
+
+		(resp, content) = self.rachio.h.request(url, 'GET', headers=self.rachio.headers)
+		return content
+
