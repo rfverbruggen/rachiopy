@@ -19,4 +19,5 @@ class Rachio(object):
 		self.device = Device(self)
 		self.zone = Zone(self)
 		self.schedulerule = Schedulerule(self)
+		self.flexschedulerule = FlexSchedulerule(self)
 		self.notification = Notification(self)

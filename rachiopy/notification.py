@@ -32,4 +32,10 @@ class Notification(object):
 		url = '%snotification/webhook/%s' % (self.rachio.server, id)
 
 		(resp, content) = self.rachio.h.request(url, 'DELETE', headers=self.rachio.headers)
-		return content  
+		return content
+
+	def get(self, id):
+		url = '%snotification/webhook/%s' % (self.rachio.server, id)
+
+		(resp, content) = self.rachio.h.request(url, 'GET', headers=self.rachio.headers)
+		return content
