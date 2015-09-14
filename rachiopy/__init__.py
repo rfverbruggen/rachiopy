@@ -4,6 +4,7 @@ from person import Person
 from device import Device
 from zone import Zone
 from schedulerule import Schedulerule
+from flexschedulerule import FlexSchedulerule
 from notification import Notification
 
 class Rachio(object):
