@@ -6,10 +6,10 @@ class Person(object):
 		url = '%sperson/info' % (self.rachio.server)
 
 		(resp, content) = self.rachio.h.request(url, 'GET', headers=self.rachio.headers)
-		return content
+		return (resp, content)
 
 	def get(self, id):
 		url = '%sperson/%s' % (self.rachio.server, id)
 
 		(resp, content) = self.rachio.h.request(url, 'GET', headers=self.rachio.headers)
-		return content
+		return (resp, content)
