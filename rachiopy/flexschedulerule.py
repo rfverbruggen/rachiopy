@@ -6,5 +6,5 @@ class FlexSchedulerule(object):
 		url = '%sflexschedulerule/%s' % (self.rachio.server, id)
 
 		(resp, content) = self.rachio.h.request(url, 'GET', headers=self.rachio.headers)
-		return content
+		return (resp, content)
 
