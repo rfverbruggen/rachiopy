@@ -59,5 +59,5 @@ class Device(object):
 		url = '%sdevice/off' % self.rachio.server
 		payload = { 'id' : id }
 
-		(resp, content) = self.rachio.h.request(url, 'PUT', body=json.dumps(payload), header=self.rachio.headers)
+		(resp, content) = self.rachio.h.request(url, 'PUT', body=json.dumps(payload), headers=self.rachio.headers)
 		return (resp, content) 
