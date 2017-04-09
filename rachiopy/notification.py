@@ -1,43 +1,49 @@
-import json
+"""Notification module handling /notification/ API calls."""
+#pylint: disable=invalid-name
+
 
 class Notification(object):
-	def __init__(self, rachio):
-		self.rachio = rachio
+    """Notification class with methods for /notification/ API calls."""
+    def __init__(self, rachio):
+        self.rachio = rachio
 
-	def getWebhookEventType(self):
-		url = '%snotification/webhook_event_type' % self.rachio.server
+    def getWebhookEventType(self):
+        """
+        Retrieve the list of events types that are available to any webhook
+        for subscription.
+        """
+        path = 'notification/webhook_event_type'
+        return self.rachio.get(path)
 
-		(resp, content) = self.rachio.h.request(url, 'GET', headers=self.rachio.headers)
-		return (resp, content)
+    def getDeviceWebhook(self, dev_id):
+        """Retrieve all webhooks for a device."""
+        path = '/'.join(['notification', dev_id, 'webhook'])
+        return self.rachio.get(path)
 
-	def getDeviceWebhook(self, id):
-		url = '%snotification/%s/webhook' % (self.rachio.server, id)
+    def postWebhook(self, dev_id, external_id, url, event_types):
+        """
+        Add a webhook to a device. externalId can be used as opaque data that
+        is tied to your company, and passed back in each webhook event
+        response.
+        """
+        path = 'notification/webhook'
+        payload = {'device': {'id': dev_id}, 'externalId': external_id,
+                   'url': url, 'eventTypes': event_types}
+        return self.rachio.post(path, payload)
 
-		(resp, content) = self.rachio.h.request(url, 'GET', headers=self.rachio.headers)
-		return (resp, content)
+    def putWebhook(self, hook_id, external_id, url, event_types):
+        """Update a webhook."""
+        path = 'notification/webhook'
+        payload = {'id': hook_id, 'externalId': external_id,
+                   'url': url, 'eventTypes': event_types}
+        return self.rachio.put(path, payload)
 
-	def postWebhook(self, webhook):
-		url = '%snotification/webhook' % self.rachio.server
-		payload = {webhook}
+    def deleteWebhook(self, hook_id):
+        """Remove a webhook."""
+        path = '/'.join(['notification', 'webhook', hook_id])
+        return self.rachio.delete(path)
 
-		(resp, content) = self.rachio.h.request(url, 'POST', body=json.dumps(payload), headers=self.rachio.headers)
-		return (resp, content)
-
-	def putWebhook(self, webhook):
-		url = '%snotification/webhook' % self.rachio.server
-		payload = {webhook}
-
-		(resp, content) = self.rachio.h.request(url, 'PUT', body=json.dumps(payload), headers=self.rachio.headers)
-		return (resp, content)
-
-	def deleteWebhook(self, id):
-		url = '%snotification/webhook/%s' % (self.rachio.server, id)
-
-		(resp, content) = self.rachio.h.request(url, 'DELETE', headers=self.rachio.headers)
-		return (resp, content)
-
-	def get(self, id):
-		url = '%snotification/webhook/%s' % (self.rachio.server, id)
-
-		(resp, content) = self.rachio.h.request(url, 'GET', headers=self.rachio.headers)
-		return (resp, content)
+    def get(self, hook_id):
+        """Get a webhook."""
+        path = '/'.join(['notification', 'webhook', hook_id])
+        return self.rachio.get(path)
