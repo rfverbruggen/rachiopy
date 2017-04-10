@@ -1,8 +1,9 @@
+"""Rachiopy setup script."""
 from setuptools import setup
 
 setup(
     name='RachioPy',
-    version=0.1.1,
+    version='0.1.1',
     author='Robbert Verbruggen',
     packages=['rachiopy'],
     install_requires=['httplib2'],
@@ -17,6 +18,7 @@ setup(
         'License :: OSI Approved :: MIT License',
         'Operating System :: OS Independent',
         'Programming Language :: Python :: 2',
+        'Programming Language :: Python :: 3',
         'Topic :: Software Development',
         ]
-) 
+)

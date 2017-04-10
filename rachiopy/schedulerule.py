@@ -1,33 +1,35 @@
-import json 
+"""Schedulerule module handling /scheduerule/ API calls."""
+#pylint: disable=invalid-name
+
 
 class Schedulerule(object):
-	def __init__(self, rachio):
-		self.rachio = rachio
+    """Schedulerule class with methods for /schedulerule/ API calls."""
+    def __init__(self, rachio):
+        self.rachio = rachio
 
-	def skip(self, id):
-		url = '%sschedulerule/skip' % self.rachio.server
-		payload = { 'id' : id }
+    def skip(self, sched_rule_id):
+        """Skip a schedule rule (watering time)."""
+        path = 'schedulerule/skip'
+        payload = {'id' : sched_rule_id}
+        return self.rachio.put(path, payload)
 
-		(resp, content) = self.rachio.h.request(url, 'PUT', body=json.dumps(payload), headers=self.rachio.headers)
-		return (resp, content)
+    def start(self, sched_rule_id):
+        """Start a schedule rule (watering time)."""
+        path = 'schedulerule/start'
+        payload = {'id': sched_rule_id}
+        return self.rachio.put(path, payload)
 
-	def start(self, id):
-		url = '%sschedulerule/start' % self.rachio.server
-		payload = { 'id': id }
+    def seasonalAdjustment(self, sched_rule_id, adjustment):
+        """
+        Seasonal adjustment for a schedule rule (watering time). This
+        adjustment amount will be applied to the overall run time of the
+        selected schedule while overriding any current adjustments.
+        """
+        path = 'schedulerule/seasonal_adjustment'
+        payload = {'id': sched_rule_id, 'adjustment': adjustment}
+        return self.rachio.put(path, payload)
 
-		(resp, content) = self.rachio.h.request(url, 'PUT', body=json.dumps(payload), headers=self.rachio.headers)
-		return (resp, content)
-
-	def seasonalAdjustment(self, id, adjustment):
-		url = '%sschedulerule/seasonal_adjustment' % self.rachio.server
-		payload = { 'id': id, 'adjustment': adjustment }
-
-		(resp, content) = self.rachio.h.request(url, 'PUT', body=json.dumps(payload), headers=self.rachio.headers)
-		return (resp, content)
-
-	def get(self, id):
-		url = '%sschedulerule/%s' % (self.rachio.server, id)
-
-		(resp, content) = self.rachio.h.request(url, 'GET', headers=self.rachio.headers)
-		return (resp, content)
-
+    def get(self, sched_rule_id):
+        """Retrieve the information for a scheduleRule entity."""
+        path = '/'.join(['schedulerule', sched_rule_id])
+        return self.rachio.get(path)
