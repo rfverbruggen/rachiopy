@@ -33,11 +33,8 @@ class Rachio(object):
         (resp, content) = _HTTP.request(url, method,
                                         headers=self._headers, body=body)
 
-        status = resp.get('status')
         content_type = resp.get('content-type')
-        if status != '200':
-            content = None
-        elif content_type == 'application/json':
+        if content_type and content_type.startswith('application/json'):
             content = json.loads(content.decode('UTF-8'))
 
         return (resp, content)
