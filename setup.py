@@ -15,7 +15,7 @@ setup(
     long_description=open('README.md').read(),
     platforms='Cross Platform',
     classifiers=[
-        'Development Status :: 0.1.1 - Beta',
+        'Development Status :: 4 - Beta',
         'Intended Audience :: Developers',
         'License :: OSI Approved :: MIT License',
         'Operating System :: OS Independent',
