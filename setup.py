@@ -3,16 +3,15 @@ from setuptools import setup
 
 setup(
     name='RachioPy',
-    version='0.1.1',
+    version='0.1.2',
     author='Robbert Verbruggen',
     author_email='rfverbruggen@icloud.com',
     packages=['rachiopy'],
     install_requires=['httplib2'],
     url='https://github.com/rfverbruggen/rachiopy',
-    download_url='https://github.com/rfverbruggen/rachiopy/archive/0.1.1.tar.gz',
+    download_url='https://github.com/rfverbruggen/rachiopy/archive/0.1.2.tar.gz',
     license='MIT',
     description='A Python module for the Rachio API.',
-    long_description=open('README.md').read(),
     platforms='Cross Platform',
     classifiers=[
         'Development Status :: 4 - Beta',
