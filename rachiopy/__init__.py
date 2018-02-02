@@ -11,7 +11,7 @@ from rachiopy.flexschedulerule import FlexSchedulerule
 from rachiopy.notification import Notification
 
 _SERVER = 'https://api.rach.io/1/public'
-_HTTP = httplib2.Http('.cache')
+_HTTP = httplib2.Http()
 
 #pylint: disable=too-many-instance-attributes
 class Rachio(object):
