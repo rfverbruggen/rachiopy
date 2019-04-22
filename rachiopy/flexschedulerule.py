@@ -1,13 +1,14 @@
 """Flexschedulerule module handling /flexschedulerule/ API calls."""
-#pylint: disable=invalid-name
 
 
+# pylint: disable=invalid-name
+# pylint: disable=useless-object-inheritance
+# pylint: disable=too-few-public-methods
 class FlexSchedulerule(object):
-    """
-    FlexSchedulerule class with methods for /flexschedulerule/ API calls.
-    """
-    #pylint: disable=too-few-public-methods
+    """FlexSchedulerule class with methods for /flexschedulerule/ calls."""
+
     def __init__(self, rachio):
+        """Flexschedulerule class initializer."""
         self.rachio = rachio
 
     def get(self, flex_sched_rule_id):

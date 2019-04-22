@@ -1,10 +1,12 @@
 """Zone module handling /zone/ API calls."""
-#pylint: disable=invalid-name
 
 
+# pylint: disable=invalid-name,useless-object-inheritance
 class Zone(object):
     """Zone class with methods for /zone/ API calls."""
+
     def __init__(self, rachio):
+        """Zone class initializer."""
         self.rachio = rachio
 
     def start(self, zone_id, duration):
@@ -31,7 +33,9 @@ class Zone(object):
 
 class ZoneSchedule(object):
     """Help with starting multiple zones."""
+
     def __init__(self, zone_api):
+        """Zoneschedule class initializer."""
         self._api = zone_api
         self._zones = []
 
