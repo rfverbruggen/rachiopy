@@ -1,7 +1,6 @@
 """Person module handling /person/ API calls."""
 
 
-# pylint: disable=invalid-name,useless-object-inheritance
 class Person(object):
     """Person class with methods for /person/ API calls."""
 

@@ -1,7 +1,6 @@
 """Notification module handling /notification/ API calls."""
 
 
-# pylint: disable=invalid-name,useless-object-inheritance
 class Notification(object):
     """Notification class with methods for /notification/ API calls."""
 

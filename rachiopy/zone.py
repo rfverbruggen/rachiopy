@@ -1,7 +1,6 @@
 """Zone module handling /zone/ API calls."""
 
 
-# pylint: disable=invalid-name,useless-object-inheritance
 class Zone(object):
     """Zone class with methods for /zone/ API calls."""
 

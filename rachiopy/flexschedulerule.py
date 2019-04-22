@@ -1,9 +1,6 @@
 """Flexschedulerule module handling /flexschedulerule/ API calls."""
 
 
-# pylint: disable=invalid-name
-# pylint: disable=useless-object-inheritance
-# pylint: disable=too-few-public-methods
 class FlexSchedulerule(object):
     """FlexSchedulerule class with methods for /flexschedulerule/ calls."""
 

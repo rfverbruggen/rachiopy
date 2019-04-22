@@ -1,7 +1,6 @@
 """Device module handling /device/ API calls."""
 
 
-# pylint: disable=invalid-name,useless-object-inheritance
 class Device(object):
     """Device class with /device/ API calls."""
 

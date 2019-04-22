@@ -14,7 +14,6 @@ _SERVER = 'https://api.rach.io/1/public'
 _HTTP = httplib2.Http()
 
 
-# pylint: disable=useless-object-inheritance
 class Rachio(object):
     """Represent the Rachio API."""
 

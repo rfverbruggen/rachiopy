@@ -1,7 +1,6 @@
 """Schedulerule module handling /scheduerule/ API calls."""
 
 
-# pylint: disable=invalid-name,useless-object-inheritance
 class Schedulerule(object):
     """Schedulerule class with methods for /schedulerule/ API calls."""
 
