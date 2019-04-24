@@ -13,7 +13,7 @@ matrix:
     - python: 3.6
       env: TOXENV=py36
     - python: 3.7
-      env: TOXENV=py37
+      env: TOXENV=py37 COVERAGE=true
     - env: TOXENV=pylint
     - env: TOXENV=lint
     - env: TOXENV=cov
@@ -23,10 +23,13 @@ before_install:
     - pip install -r requirements_test.txt
 script:
     - tox
-    - coverage run --source=rachiopy setup.py test
-    - coverage report -m
 after_success:
-    - coveralls
+    - |
+      if [[ $COVERAGE == true ]]; then
+          coverage run --source=rachiopy setup.py test
+          coverage report -m
+          coveralls
+      fi
 
 deploy:
   provider: pypi
