@@ -1,4 +1,4 @@
-"""Main rachiopy module"""
+"""Main rachiopy module."""
 
 import json
 import httplib2
@@ -13,10 +13,12 @@ from rachiopy.notification import Notification
 _SERVER = 'https://api.rach.io/1/public'
 _HTTP = httplib2.Http()
 
-#pylint: disable=too-many-instance-attributes
+
 class Rachio(object):
     """Represent the Rachio API."""
+
     def __init__(self, authtoken):
+        """Rachio class initializer."""
         self._headers = {'Content-Type': 'application/json',
                          'Authorization': 'Bearer %s' % authtoken}
 

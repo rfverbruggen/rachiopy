@@ -1,0 +1,41 @@
+dist: xenial
+
+language: python
+
+matrix:
+  include:
+    - python: 2.7
+      env: TOXENV=py27
+    - python: 3.4
+      env: TOXENV=py34
+    - python: 3.5
+      env: TOXENV=py35
+    - python: 3.6
+      env: TOXENV=py36
+    - python: 3.7
+      env: TOXENV=py37 COVERAGE=true
+    - env: TOXENV=pylint
+    - env: TOXENV=lint
+    - env: TOXENV=cov
+
+before_install:
+    - pip install tox
+    - pip install -r requirements_test.txt
+script:
+    - tox
+after_success:
+    - |
+      if [[ $COVERAGE == true ]]; then
+          coverage run --source=rachiopy setup.py test
+          coverage report -m
+          coveralls
+      fi
+
+deploy:
+  provider: pypi
+  user: rfverbruggen
+  password:
+    secure: "TJVfGSE1E9KSakmTus27DuYry7i2xYgMojN64rWaxDRsRQQOOVHqLjXdXLnRxm6JRO7RUlCdcCFCjLK5stPHQNHx3TuQ0YYkAaS5xeaQA57WidjdJHVqoUtTQonDCIxZc+OAvMOsIH31cp31FC1v+/lLdkNFJppi863AldlfUKKu6RF2I3foC0QrbkwBtzJNxqQoHHXs5cIoEgbob5YqEeKL1kON+s6fRsHHuLd8lE8ts2Ci7PxqG/WvZKseGwUATnBNScvcvdjgLgpNCXun3MbXtMkxWUsgUkz3E17tOs5Qjvj2h5M0cm0RYq7tZAr/VPZoqUEj716AbCm2warKkjHcR3+h0pwmmK/XCpXEaDnqF6SAaGoNWhZxl3AubZgy3IPKPqAR5t9ZvhGBCcka9fsmoQglMVBFPN/5YOtBJTyPR2lVzMsFkNhSiL5PQ9EfPqvA16VroJRBNTKK9WdQD0m3sdQgAmiYXhU98o986EYEX+PkhSJACSYlMJVax/1kLN2w385yAMq4KEdj1B9yGOdbSSkrqGZy0hL5Tb5yWowPLXw6reYA9bUruAxbjBUbZc+v1/Gh28rljqk6fUV2eDbgLKRvzsz/UOVbRmwhuo++gkJwkHqeIiXItkbf5CfgapIboQ8JBiU6YmG3T8T024Wu7vGmGjXOIj8GFb6JSdQ="
+  on:
+    tags: true
+    branch: master
