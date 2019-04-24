@@ -1,17 +1,15 @@
 """Person module handling /person/ API calls."""
-#pylint: disable=invalid-name
 
 
 class Person(object):
     """Person class with methods for /person/ API calls."""
+
     def __init__(self, rachio):
+        """Person class initializer."""
         self.rachio = rachio
 
     def getInfo(self):
-        """
-        Retrieve the id for the person entity currently logged in
-        through OAuth.
-        """
+        """Retrieve the id for the person entity currently logged in."""
         path = 'person/info'
         return self.rachio.get(path)
 

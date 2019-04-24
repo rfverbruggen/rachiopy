@@ -1,16 +1,17 @@
 """Notification module handling /notification/ API calls."""
-#pylint: disable=invalid-name
 
 
 class Notification(object):
     """Notification class with methods for /notification/ API calls."""
+
     def __init__(self, rachio):
+        """Notification class initializer."""
         self.rachio = rachio
 
     def getWebhookEventType(self):
-        """
-        Retrieve the list of events types that are available to any webhook
-        for subscription.
+        """Retrieve the list of events types.
+
+        Event types that are available to any webhook for subscription.
         """
         path = 'notification/webhook_event_type'
         return self.rachio.get(path)
@@ -21,8 +22,9 @@ class Notification(object):
         return self.rachio.get(path)
 
     def postWebhook(self, dev_id, external_id, url, event_types):
-        """
-        Add a webhook to a device. externalId can be used as opaque data that
+        """Add a webhook to a device.
+
+        externalId can be used as opaque data that
         is tied to your company, and passed back in each webhook event
         response.
         """
