@@ -1,4 +1,4 @@
-Rachiopy
+Rachiopy [![Build Status](https://travis-ci.org/rfverbruggen/rachiopy.svg?branch=master)](https://travis-ci.org/rfverbruggen/rachiopy) | [![Coverage Status](https://coveralls.io/repos/github/rfverbruggen/rachiopy/badge.svg)](https://coveralls.io/github/rfverbruggen/rachiopy)
 ========
 This python package provides a interface to the Rachio public API.
 
