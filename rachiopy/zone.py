@@ -24,6 +24,18 @@ class Zone(object):
         """Create an empty zone schedule."""
         return ZoneSchedule(self)
 
+    def setMoisturePercent(self, zone_id, percent):
+        """Set zone moisture percent."""
+        path = 'zone/setMoisturePercent'
+        payload = {'id': zone_id, 'percent': percent}
+        return self.rachio.put(path, payload)
+
+    def setMoistureLevel(self, zone_id, level):
+        """Set zone moisture level."""
+        path = 'zone/setMoistureLevel'
+        payload = {'id': zone_id, 'level': level}
+        return self.rachio.put(path, payload)
+
     def get(self, zone_id):
         """Retrieve the information for a zone entity."""
         path = '/'.join(['zone', zone_id])
