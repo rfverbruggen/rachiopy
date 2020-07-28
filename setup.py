@@ -1,7 +1,7 @@
 """Rachiopy setup script."""
 from setuptools import setup
 
-version = '0.1.3'
+version = '0.1.4'
 
 github_username = 'rfverbruggen'
 github_repository = 'rachiopy'
