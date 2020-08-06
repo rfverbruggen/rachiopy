@@ -1,48 +1,42 @@
 """Zone module handling /zone/ API calls."""
 
+from rachiopy.rachioobject import RachioObject
 
-class Zone(object):
+
+class Zone(RachioObject):
     """Zone class with methods for /zone/ API calls."""
-
-    def __init__(self, rachio):
-        """Zone class initializer."""
-        self.rachio = rachio
 
     def start(self, zone_id, duration):
         """Start a zone."""
-        path = 'zone/start'
-        payload = {'id': zone_id, 'duration': duration}
-        return self.rachio.put(path, payload)
+        payload = {"id": zone_id, "duration": duration}
+        return self.put_request("zone/start", payload)
 
-    def startMultiple(self, zones):
+    def start_multiple(self, zones):
         """Start multiple zones."""
-        path = 'zone/start_multiple'
-        payload = {'zones': zones}
-        return self.rachio.put(path, payload)
+        payload = {"zones": zones}
+        return self.put_request("zone/start_multiple", payload)
 
     def schedule(self):
         """Create an empty zone schedule."""
         return ZoneSchedule(self)
 
-    def setMoisturePercent(self, zone_id, percent):
+    def set_moisture_percent(self, zone_id, percent):
         """Set zone moisture percent."""
-        path = 'zone/setMoisturePercent'
-        payload = {'id': zone_id, 'percent': percent}
-        return self.rachio.put(path, payload)
+        payload = {"id": zone_id, "percent": percent}
+        return self.put_request("zone/setMoisturePercent", payload)
 
-    def setMoistureLevel(self, zone_id, level):
+    def set_moisture_level(self, zone_id, level):
         """Set zone moisture level."""
-        path = 'zone/setMoistureLevel'
-        payload = {'id': zone_id, 'level': level}
-        return self.rachio.put(path, payload)
+        payload = {"id": zone_id, "level": level}
+        return self.put_request("zone/setMoistureLevel", payload)
 
     def get(self, zone_id):
         """Retrieve the information for a zone entity."""
-        path = '/'.join(['zone', zone_id])
-        return self.rachio.get(path)
+        path = f"zone/{zone_id}"
+        return self.get_request(path)
 
 
-class ZoneSchedule(object):
+class ZoneSchedule():
     """Help with starting multiple zones."""
 
     def __init__(self, zone_api):
@@ -58,7 +52,7 @@ class ZoneSchedule(object):
         """Start the schedule."""
         zones = [{"id": data[0], "duration": data[1], "sortOrder": count}
                  for (count, data) in enumerate(self._zones, 1)]
-        self._api.startMultiple(zones)
+        self._api.start_multiple(zones)
 
     def __enter__(self):
         """Allow a schedule to be created in a with block."""
