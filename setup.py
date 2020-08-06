@@ -1,29 +1,31 @@
 """Rachiopy setup script."""
-from setuptools import setup
+from setuptools import find_packages, setup
 
-version = '0.2.0-dev'
+VERSION = "0.2.0-dev"
 
-github_username = 'rfverbruggen'
-github_repository = 'rachiopy'
+GITHUB_USERNAME = "rfverbruggen"
+GITHUB_REPOSITORY = "rachiopy"
 
-github_path = '{}/{}'.format(github_username, github_repository)
-github_url = 'https://github.com/{}'.format(github_path)
+GITHUB_PATH = f"{GITHUB_USERNAME}/{GITHUB_REPOSITORY}"
+GITHUB_URL = f"https://github.com/{GITHUB_PATH}"
 
-download_url = '{}/archive/{}.tar.gz'.format(github_url, version)
-project_urls = {
-    'Bug Reports': '{}/issues'.format(github_url)
+DOWNLOAD_URL = f"{GITHUB_URL}/archive/{VERSION}.tar.gz"
+PROJECT_URLS = {
+    'Bug Reports': f"{GITHUB_URL}/issues"
 }
+
+PACKAGES = find_packages(exclude=["tests", "tests.*"])
 
 setup(
     name='RachioPy',
-    version=version,
+    version=VERSION,
     author='Robbert Verbruggen',
     author_email='rfverbruggen@icloud.com',
-    packages=['rachiopy'],
+    packages=PACKAGES,
     install_requires=['httplib2'],
-    url=github_url,
-    download_url=download_url,
-    project_urls=project_urls,
+    url=GITHUB_URL,
+    download_url=DOWNLOAD_URL,
+    project_urls=PROJECT_URLS,
     license='MIT',
     description='A Python module for the Rachio API.',
     platforms='Cross Platform',
