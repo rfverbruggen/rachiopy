@@ -76,4 +76,3 @@ class Device(object):
         path = 'device/resume_zone_run'
         payload = {'id': dev_id}
         return self.rachio.put(path, payload)
-
