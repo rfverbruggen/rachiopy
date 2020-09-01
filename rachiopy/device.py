@@ -64,3 +64,16 @@ class Device(object):
         path = 'device/off'
         payload = {'id': dev_id}
         return self.rachio.put(path, payload)
+
+    def pause(self, dev_id, duration):
+        """Pause currently running zone."""
+        path = 'device/pause_zone_run'
+        payload = {'id': dev_id, 'duration': duration}
+        return self.rachio.put(path, payload)
+
+    def resume(self, dev_id):
+        """Resume paused zone."""
+        path = 'device/resume_zone_run'
+        payload = {'id': dev_id}
+        return self.rachio.put(path, payload)
+
