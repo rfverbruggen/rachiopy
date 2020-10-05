@@ -1,78 +1,209 @@
 """Device module handling /device/ API calls."""
 
+from rachiopy.rachioobject import RachioObject
 
-class Device(object):
+
+class Device(RachioObject):
     """Device class with /device/ API calls."""
 
-    def __init__(self, rachio):
-        """Device class initializer."""
-        self.rachio = rachio
+    def get(self, dev_id: str):
+        """Retrieve the information for a device entity.
 
-    def get(self, dev_id):
-        """Retrieve the information for a device entity."""
-        path = '/'.join(['device', dev_id])
-        return self.rachio.get(path)
+        For more info of the content in the response see:
+        https://rachio.readme.io/docs/publicdeviceid
 
-    def getCurrentSchedule(self, dev_id):
-        """Retrieve current schedule running, if any."""
-        path = '/'.join(['device', dev_id, 'current_schedule'])
-        return self.rachio.get(path)
+        :param dev_id: Device's unique id
+        :type dev_id: str
 
-    def getEvent(self, dev_id, starttime, endtime):
-        """Retrieve events for a device entity."""
-        path = 'device/%s/event?startTime=%s&endTime=%s' % \
-            (dev_id, starttime, endtime)
-        return self.rachio.get(path)
+        :return: The return value is a tuple of (response, content), the first
+            being and instance of the httplib2.Response class, the second
+            being a string that contains the response entity body (Python
+            object if it contains JSON).
+        :rtype: tuple
+        """
+        path = f"device/{dev_id}"
+        return self.get_request(path)
 
-    def getScheduleItem(self, dev_id):
-        """Retrieve the next two weeks of schedule items for a device."""
-        path = '/'.join(['device', dev_id, 'scheduleitem'])
-        return self.rachio.get(path)
+    def current_schedule(self, dev_id: str):
+        """Retrieve current schedule running, if any.
 
-    def getForecast(self, dev_id, units):
-        """Retrieve current and predicted forecast."""
-        assert units in ['US', 'METRIC'], 'units must be either US or METRIC'
-        path = 'device/%s/forecast?units=%s' % (dev_id, units)
-        return self.rachio.get(path)
+        For more info of the content in the response see:
+        https://rachio.readme.io/docs/publicdeviceidcurrent_schedule
 
-    def stopWater(self, dev_id):
-        """Stop all watering on device."""
-        path = 'device/stop_water'
-        payload = {'id': dev_id}
-        return self.rachio.put(path, payload)
+        :param dev_id: Device's unique id
+        :type dev_id: str
 
-    def rainDelay(self, dev_id, duration):
-        """Rain delay device."""
-        path = 'device/rain_delay'
-        payload = {'id': dev_id, 'duration': duration}
-        return self.rachio.put(path, payload)
+        :return: The return value is a tuple of (response, content), the first
+            being and instance of the httplib2.Response class, the second
+            being a string that contains the response entity body (Python
+            object if it contains JSON).
+        :rtype: tuple
+        """
+        path = f"device/{dev_id}/current_schedule"
+        return self.get_request(path)
 
-    def on(self, dev_id):
+    def event(self, dev_id: str, starttime: int, endtime: int):
+        """Retrieve events for a device entity.
+
+        For more info of the content in the response see:
+        https://rachio.readme.io/docs/publicdeviceideventstarttimestarttimeendtimeendtim
+
+        :param dev_id: Device's unique id
+        :type dev_id: str
+
+        :param starttime: Query start time milliseconds unix epoch
+        :type starttime: int
+
+        :param endtime: Query end time milliseconds unix epoch
+        :type endtime: int
+
+        :return: The return value is a tuple of (response, content), the first
+            being and instance of the httplib2.Response class, the second
+            being a string that contains the response entity body (Python
+            object if it contains JSON).
+        :rtype: tuple
+        """
+        path = f"device/{dev_id}/event?startTime={starttime}&endTime={endtime}"
+        return self.get_request(path)
+
+    def forecast(self, dev_id: str, units="US"):
+        """Retrieve current and predicted forecast.
+
+        For more info of the content in the response see:
+        https://rachio.readme.io/docs/publicdeviceidforecastunitsunits
+
+        :param dev_id: Device's unique id
+        :type dev_id: str
+
+        :param units: Forecast data units, one of US or METRIC, defaults to US
+        :type units: str
+
+        :return: The return value is a tuple of (response, content), the first
+            being and instance of the httplib2.Response class, the second
+            being a string that contains the response entity body (Python
+            object if it contains JSON).
+        :rtype: tuple
+        """
+        assert units in ["US", "METRIC"], "units must be either US or METRIC"
+        path = f"device/{dev_id}/forecast?units={units}"
+        return self.get_request(path)
+
+    def stop_water(self, dev_id: str):
+        """Stop all watering on device.
+
+        For more info of the content in the response see:
+        https://rachio.readme.io/docs/devicestop_water
+
+        :param dev_id: Device's unique id
+        :type dev_id: str
+
+        :return: The return value is a tuple of (response, content), the first
+            being and instance of the httplib2.Response class, the second
+            being a string that contains the response entity body (Python
+            object if it contains JSON).
+        :rtype: tuple
+        """
+        payload = {"id": dev_id}
+        return self.put_request("device/stop_water", payload)
+
+    def rain_delay(self, dev_id: str, duration: int):
+        """Rain delay device.
+
+        For more info of the content in the response see:
+        https://rachio.readme.io/docs/devicestop_water
+
+        :param dev_id: Device's unique id
+        :type dev_id: str
+
+        :param duration: Duration in seconds (Range is 0 - 604800 (7 days) )
+        :type duration: int
+
+        :return: The return value is a tuple of (response, content), the first
+            being and instance of the httplib2.Response class, the second
+            being a string that contains the response entity body (Python
+            object if it contains JSON).
+        :rtype: tuple
+        """
+        assert 0 <= duration <= 604800, "duration must be between 0 and 604800"
+        payload = {"id": dev_id, "duration": duration}
+        return self.put_request("device/rain_delay", payload)
+
+    def turn_on(self, dev_id: str):
         """Turn ON all features of the device.
 
         schedules, weather intelligence, water budget, etc.
-        """
-        path = 'device/on'
-        payload = {'id': dev_id}
-        return self.rachio.put(path, payload)
 
-    def off(self, dev_id):
+        For more info of the content in the response see:
+        https://rachio.readme.io/docs/publicdeviceon-1
+
+        :param dev_id: Device's unique id
+        :type dev_id: str
+
+        :return: The return value is a tuple of (response, content), the first
+            being and instance of the httplib2.Response class, the second
+            being a string that contains the response entity body (Python
+            object if it contains JSON).
+        :rtype: tuple
+        """
+        payload = {"id": dev_id}
+        return self.put_request("device/on", payload)
+
+    def turn_off(self, dev_id: str):
         """Turn OFF all features of the device.
 
         schedules, weather intelligence, water budget, etc.
+
+        For more info of the content in the response see:
+        https://rachio.readme.io/docs/publicdeviceoff-1
+
+        :param dev_id: Device's unique id
+        :type dev_id: str
+
+        :return: The return value is a tuple of (response, content), the first
+            being and instance of the httplib2.Response class, the second
+            being a string that contains the response entity body (Python
+            object if it contains JSON).
+        :rtype: tuple
         """
-        path = 'device/off'
-        payload = {'id': dev_id}
-        return self.rachio.put(path, payload)
+        payload = {"id": dev_id}
+        return self.put_request("device/off", payload)
 
-    def pauseZoneRun(self, dev_id, duration):
-        """Pause currently running zone."""
-        path = 'device/pause_zone_run'
-        payload = {'id': dev_id, 'duration': duration}
-        return self.rachio.put(path, payload)
+    def pause_zone_run(self, dev_id: str, duration: int):
+        """Pause a zone run for device.
 
-    def resumeZoneRun(self, dev_id):
-        """Resume paused zone."""
-        path = 'device/resume_zone_run'
-        payload = {'id': dev_id}
-        return self.rachio.put(path, payload)
+        For more info of the content in the response see:
+        https://rachio.readme.io/docs/publicdevicepause_zone_run
+
+        :param dev_id: Device's unique id
+        :type dev_id: str
+
+        :param duration: Duration in seconds (Range is 0 - 3600 (1 hour) )
+        :type duration: int
+
+        :return: The return value is a tuple of (response, content), the first
+            being and instance of the httplib2.Response class, the second
+            being a string that contains the response entity body (Python
+            object if it contains JSON).
+        :rtype: tuple
+        """
+        assert 0 <= duration <= 3600, "duration must be between 0 and 3600"
+        payload = {"id": dev_id, "duration": duration}
+        return self.put_request("device/pause_zone_run", payload)
+
+    def resume_zone_run(self, dev_id: str):
+        """Resume a zone run for device.
+
+        For more info of the content in the response see:
+        https://rachio.readme.io/docs/publicdeviceresume_zone_run
+
+        :param dev_id: Device's unique id
+        :type dev_id: str
+
+        :return: The return value is a tuple of (response, content), the first
+            being and instance of the httplib2.Response class, the second
+            being a string that contains the response entity body (Python
+            object if it contains JSON).
+        :rtype: tuple
+        """
+        payload = {"id": dev_id}
+        return self.put_request("device/resume_zone_run", payload)

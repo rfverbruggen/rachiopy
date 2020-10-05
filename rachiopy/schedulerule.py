@@ -1,36 +1,84 @@
 """Schedulerule module handling /scheduerule/ API calls."""
 
+from decimal import Decimal
 
-class Schedulerule(object):
+from rachiopy.rachioobject import RachioObject
+
+
+class Schedulerule(RachioObject):
     """Schedulerule class with methods for /schedulerule/ API calls."""
 
-    def __init__(self, rachio):
-        """Schedulerule class initializer."""
-        self.rachio = rachio
+    def skip(self, sched_rule_id: str):
+        """Skip a schedule rule (watering time).
 
-    def skip(self, sched_rule_id):
-        """Skip a schedule rule (watering time)."""
-        path = 'schedulerule/skip'
-        payload = {'id': sched_rule_id}
-        return self.rachio.put(path, payload)
+        For more info of the content in the response see:
+        https://rachio.readme.io/docs/scheduleruleskip
 
-    def start(self, sched_rule_id):
-        """Start a schedule rule (watering time)."""
-        path = 'schedulerule/start'
-        payload = {'id': sched_rule_id}
-        return self.rachio.put(path, payload)
+        :param sched_rule_id: Schedule rule's unique id
+        :type sched_rule_id: str
 
-    def seasonalAdjustment(self, sched_rule_id, adjustment):
+        :return: The return value is a tuple of (response, content), the first
+            being and instance of the httplib2.Response class, the second
+            being a string that contains the response entity body.
+        :rtype: tuple
+        """
+        payload = {"id": sched_rule_id}
+        return self.put_request("schedulerule/skip", payload)
+
+    def start(self, sched_rule_id: str):
+        """Start a schedule rule (watering time).
+
+        For more info of the content in the response see:
+        https://rachio.readme.io/docs/schedulerulestart
+
+        :param sched_rule_id: Schedule rule's unique id
+        :type sched_rule_id: str
+
+        :return: The return value is a tuple of (response, content), the first
+            being and instance of the httplib2.Response class, the second
+            being a string that contains the response entity body.
+        :rtype: tuple
+        """
+        payload = {"id": sched_rule_id}
+        return self.put_request("schedulerule/start", payload)
+
+    def seasonal_adjustment(self, sched_rule_id: str, adjustment: Decimal):
         """Seasonal adjustment for a schedule rule (watering time).
 
         This adjustment amount will be applied to the overall run time of the
         selected schedule while overriding any current adjustments.
-        """
-        path = 'schedulerule/seasonal_adjustment'
-        payload = {'id': sched_rule_id, 'adjustment': adjustment}
-        return self.rachio.put(path, payload)
 
-    def get(self, sched_rule_id):
-        """Retrieve the information for a scheduleRule entity."""
-        path = '/'.join(['schedulerule', sched_rule_id])
-        return self.rachio.get(path)
+        For more info of the content in the response see:
+        https://rachio.readme.io/docs/publicscheduleruleseasonal_adjustment
+
+        :param sched_rule_id: Schedule rule's unique id
+        :type sched_rule_id: str
+
+        :param adjustment: Seasonal adjustment percent from 100% to -100%
+            (valid data range is 1 to -1)
+        :type adjustment: Decimal
+
+        :return: The return value is a tuple of (response, content), the first
+            being and instance of the httplib2.Response class, the second
+            being a string that contains the response entity body.
+        :rtype: tuple
+        """
+        payload = {"id": sched_rule_id, "adjustment": adjustment}
+        return self.put_request("schedulerule/seasonal_adjustment", payload)
+
+    def get(self, sched_rule_id: str):
+        """Retrieve the information for a scheduleRule entity.
+
+        For more info of the content in the response see:
+        https://rachio.readme.io/docs/publicscheduleruleid
+
+        :param sched_rule_id: Schedule rule's unique id
+        :type sched_rule_id: str
+
+        :return: The return value is a tuple of (response, content), the first
+            being and instance of the httplib2.Response class, the second
+            being a string that contains the response entity body.
+        :rtype: tuple
+        """
+        path = f"schedulerule/{sched_rule_id}"
+        return self.get_request(path)
