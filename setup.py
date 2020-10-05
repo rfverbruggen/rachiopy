@@ -20,7 +20,7 @@ setup(
     author='Robbert Verbruggen',
     author_email='rfverbruggen@icloud.com',
     packages=['rachiopy'],
-    install_requires=['httplib2'],
+    install_requires=['requests'],
     url=github_url,
     download_url=download_url,
     project_urls=project_urls,
