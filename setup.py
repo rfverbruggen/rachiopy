@@ -20,7 +20,7 @@ setup(
     author="Robbert Verbruggen",
     author_email="rfverbruggen@icloud.com",
     packages=PACKAGES,
-    install_requires=["httplib2"],
+    install_requires=["requests"],
     url=GITHUB_URL,
     download_url=DOWNLOAD_URL,
     project_urls=PROJECT_URLS,

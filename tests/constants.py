@@ -1,15 +1,18 @@
 """Constants for test execution."""
 
-import json
-from httplib2 import Response
+from unittest.mock import Mock
+
+from requests import Response
 
 BASE_API_URL = "https://api.rach.io/1/public"
 
 AUTHTOKEN = "1c1d9f3d-39c9-42b1-abc0-066f5a05cdef"
 
-SUCCESS200HEADERS = Response(
-    {"status": 200, "content-type": "application/json"}
-)
-SUCCESS204HEADERS = Response({"status": 204})
+RESPONSE200 = Mock(spec=Response)
+RESPONSE200.status_code = 200
+RESPONSE200.headers = {"content-type": "application/json"}
+RESPONSE200.json.return_value = {}
 
-JSONBODY = json.dumps({}).encode()
+RESPONSE204 = Mock(spec=Response)
+RESPONSE204.headers = {}
+RESPONSE204.status_code = 204

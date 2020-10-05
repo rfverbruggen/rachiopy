@@ -5,8 +5,7 @@ from unittest.mock import patch
 import uuid
 
 from rachiopy import Person
-from tests.constants import BASE_API_URL, AUTHTOKEN, SUCCESS200HEADERS
-from tests.constants import JSONBODY
+from tests.constants import BASE_API_URL, AUTHTOKEN, RESPONSE200
 
 
 class TestPersonMethods(unittest.TestCase):
@@ -19,25 +18,25 @@ class TestPersonMethods(unittest.TestCase):
         """Test if the constructor works as expected."""
         self.assertEqual(self.person.authtoken, AUTHTOKEN)
 
-    @patch("httplib2.Http.request")
-    def test_info(self, mock_info):
+    @patch("requests.Session.request")
+    def test_info(self, mock):
         """Test if the info method works as expected."""
 
-        mock_info.return_value = (SUCCESS200HEADERS, JSONBODY)
+        mock.return_value = RESPONSE200
 
         self.person.info()
 
-        args, kwargs = mock_info.call_args
+        args, kwargs = mock.call_args
 
         # Check that the mock function is called with the rights args.
-        self.assertEqual(args[0], f"{BASE_API_URL}/person/info")
-        self.assertEqual(args[1], "GET")
-        self.assertEqual(kwargs["body"], None)
+        self.assertEqual(args[1], f"{BASE_API_URL}/person/info")
+        self.assertEqual(args[0], "GET")
+        self.assertEqual(kwargs["data"], None)
 
-    @patch("httplib2.Http.request")
+    @patch("requests.Session.request")
     def test_get(self, mock):
         """Test if the get method works as expected."""
-        mock.return_value = (SUCCESS200HEADERS, JSONBODY)
+        mock.return_value = RESPONSE200
 
         personid = uuid.uuid4()
 
@@ -46,6 +45,6 @@ class TestPersonMethods(unittest.TestCase):
         args, kwargs = mock.call_args
 
         # Check that the mock function is called with the rights args.
-        self.assertEqual(args[0], f"{BASE_API_URL}/person/{personid}")
-        self.assertEqual(args[1], "GET")
-        self.assertEqual(kwargs["body"], None)
+        self.assertEqual(args[1], f"{BASE_API_URL}/person/{personid}")
+        self.assertEqual(args[0], "GET")
+        self.assertEqual(kwargs["data"], None)

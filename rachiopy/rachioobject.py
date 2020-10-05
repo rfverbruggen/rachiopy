@@ -1,26 +1,28 @@
 """RachioObject module containing a helper class for all API calls."""
 
-import json
-import httplib2
+from requests import Session
 
 _API_URL = "https://api.rach.io/1/public"
-_HTTP = httplib2.Http()
 
 
 class RachioObject:
     """The Rachio base object."""
 
-    def __init__(self, authtoken: str):
+    def __init__(self, authtoken: str, http_session=None):
         """Rachioobject class initializer.
 
         :param authtoken: The API authentication token.
         :type authtoken: str
+
+        :param http_session: The HTTP Session
+        :type http_session: Session
         """
         self.authtoken = authtoken
         self._headers = {
             "Content-Type": "application/json",
             "Authorization": f"Bearer {authtoken}",
         }
+        self._http_session = http_session or Session()
 
     def _request(self, path: str, method: str, body=None):
         """Make a request from the API.
@@ -32,15 +34,18 @@ class RachioObject:
         :rtype: tuple
         """
         url = f"{_API_URL}/{path}"
-        (resp, content) = _HTTP.request(
-            url, method, headers=self._headers, body=body
+        response = self._http_session.request(
+            method, url, headers=self._headers, data=body
         )
 
-        content_type = resp.get("content-type")
-        if content_type and content_type.startswith("application/json"):
-            content = json.loads(content.decode("UTF-8"))
+        content_type = response.headers.get("content-type")
+        headers = {k.lower(): v for k, v in response.headers.items()}
+        headers["status"] = response.status_code
 
-        return (resp, content)
+        if content_type and content_type.startswith("application/json"):
+            return headers, response.json()
+
+        return headers, response.text
 
     def get_request(self, path: str, body=None):
         """Make a GET request to the API.

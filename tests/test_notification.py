@@ -5,8 +5,7 @@ from unittest.mock import patch
 import uuid
 
 from rachiopy import Notification
-from tests.constants import BASE_API_URL, AUTHTOKEN, SUCCESS200HEADERS
-from tests.constants import SUCCESS204HEADERS, JSONBODY
+from tests.constants import BASE_API_URL, AUTHTOKEN, RESPONSE200, RESPONSE204
 
 
 class TestNotificationMethods(unittest.TestCase):
@@ -19,10 +18,10 @@ class TestNotificationMethods(unittest.TestCase):
         """Test if the constructor works as expected."""
         self.assertEqual(self.notification.authtoken, AUTHTOKEN)
 
-    @patch("httplib2.Http.request")
+    @patch("requests.Session.request")
     def test_get_webhook_eventtype(self, mock):
         """Test if the get webhook eventtype method works as expected."""
-        mock.return_value = (SUCCESS200HEADERS, JSONBODY)
+        mock.return_value = RESPONSE200
 
         self.notification.get_webhook_event_type()
 
@@ -30,15 +29,15 @@ class TestNotificationMethods(unittest.TestCase):
 
         # Check that the mock function is called with the rights args.
         self.assertEqual(
-            args[0], f"{BASE_API_URL}/notification/webhook_event_type"
+            args[1], f"{BASE_API_URL}/notification/webhook_event_type"
         )
-        self.assertEqual(args[1], "GET")
-        self.assertEqual(kwargs["body"], None)
+        self.assertEqual(args[0], "GET")
+        self.assertEqual(kwargs["data"], None)
 
-    @patch("httplib2.Http.request")
+    @patch("requests.Session.request")
     def test_get_device_webhook(self, mock):
         """Test if the get device webhook method works as expected."""
-        mock.return_value = (SUCCESS200HEADERS, JSONBODY)
+        mock.return_value = RESPONSE200
 
         deviceid = uuid.uuid4()
 
@@ -48,15 +47,15 @@ class TestNotificationMethods(unittest.TestCase):
 
         # Check that the mock function is called with the rights args.
         self.assertEqual(
-            args[0], f"{BASE_API_URL}/notification/" f"{deviceid}/webhook"
+            args[1], f"{BASE_API_URL}/notification/" f"{deviceid}/webhook"
         )
-        self.assertEqual(args[1], "GET")
-        self.assertEqual(kwargs["body"], None)
+        self.assertEqual(args[0], "GET")
+        self.assertEqual(kwargs["data"], None)
 
-    @patch("httplib2.Http.request")
+    @patch("requests.Session.request")
     def test_add(self, mock):
         """Test if the add method works as expected."""
-        mock.return_value = (SUCCESS200HEADERS, JSONBODY)
+        mock.return_value = RESPONSE200
 
         deviceid = uuid.uuid4()
         externalid = "Test ID"
@@ -68,10 +67,10 @@ class TestNotificationMethods(unittest.TestCase):
         args, kwargs = mock.call_args
 
         # Check that the mock function is called with the rights args.
-        self.assertEqual(args[0], f"{BASE_API_URL}/notification/webhook")
-        self.assertEqual(args[1], "POST")
+        self.assertEqual(args[1], f"{BASE_API_URL}/notification/webhook")
+        self.assertEqual(args[0], "POST")
         self.assertEqual(
-            kwargs["body"],
+            kwargs["data"],
             {
                 "device": {"id": deviceid},
                 "externalId": externalid,
@@ -80,10 +79,10 @@ class TestNotificationMethods(unittest.TestCase):
             },
         )
 
-    @patch("httplib2.Http.request")
+    @patch("requests.Session.request")
     def test_update(self, mock):
         """Test if the update method works as expected."""
-        mock.return_value = (SUCCESS200HEADERS, JSONBODY)
+        mock.return_value = RESPONSE200
 
         hookid = uuid.uuid4()
         externalid = "Test ID"
@@ -95,10 +94,10 @@ class TestNotificationMethods(unittest.TestCase):
         args, kwargs = mock.call_args
 
         # Check that the mock function is called with the rights args.
-        self.assertEqual(args[0], f"{BASE_API_URL}/notification/webhook")
-        self.assertEqual(args[1], "PUT")
+        self.assertEqual(args[1], f"{BASE_API_URL}/notification/webhook")
+        self.assertEqual(args[0], "PUT")
         self.assertEqual(
-            kwargs["body"],
+            kwargs["data"],
             {
                 "id": hookid,
                 "externalId": externalid,
@@ -107,10 +106,10 @@ class TestNotificationMethods(unittest.TestCase):
             },
         )
 
-    @patch("httplib2.Http.request")
+    @patch("requests.Session.request")
     def test_delete(self, mock):
         """Test if the delete method works as expected."""
-        mock.return_value = (SUCCESS204HEADERS, None)
+        mock.return_value = RESPONSE204
 
         hookid = uuid.uuid4()
 
@@ -120,15 +119,15 @@ class TestNotificationMethods(unittest.TestCase):
 
         # Check that the mock function is called with the rights args.
         self.assertEqual(
-            args[0], f"{BASE_API_URL}/notification/webhook/" f"{hookid}"
+            args[1], f"{BASE_API_URL}/notification/webhook/" f"{hookid}"
         )
-        self.assertEqual(args[1], "DELETE")
-        self.assertEqual(kwargs["body"], None)
+        self.assertEqual(args[0], "DELETE")
+        self.assertEqual(kwargs["data"], None)
 
-    @patch("httplib2.Http.request")
+    @patch("requests.Session.request")
     def test_get(self, mock):
         """Test if the get method works as expected."""
-        mock.return_value = (SUCCESS200HEADERS, JSONBODY)
+        mock.return_value = RESPONSE200
 
         hookid = uuid.uuid4()
 
@@ -138,7 +137,7 @@ class TestNotificationMethods(unittest.TestCase):
 
         # Check that the mock function is called with the rights args.
         self.assertEqual(
-            args[0], f"{BASE_API_URL}/notification/webhook/" f"{hookid}"
+            args[1], f"{BASE_API_URL}/notification/webhook/" f"{hookid}"
         )
-        self.assertEqual(args[1], "GET")
-        self.assertEqual(kwargs["body"], None)
+        self.assertEqual(args[0], "GET")
+        self.assertEqual(kwargs["data"], None)

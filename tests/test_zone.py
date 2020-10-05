@@ -8,8 +8,7 @@ import random
 from random import randrange
 from rachiopy import Zone
 from rachiopy.zone import ZoneSchedule
-from tests.constants import BASE_API_URL, AUTHTOKEN, SUCCESS200HEADERS
-from tests.constants import SUCCESS204HEADERS, JSONBODY
+from tests.constants import BASE_API_URL, AUTHTOKEN, RESPONSE200, RESPONSE204
 
 
 class TestZoneMethods(unittest.TestCase):
@@ -34,10 +33,10 @@ class TestZoneMethods(unittest.TestCase):
         """Test if the constructor works as expected."""
         self.assertEqual(self.zone.authtoken, AUTHTOKEN)
 
-    @patch("httplib2.Http.request")
+    @patch("requests.Session.request")
     def test_get(self, mock):
         """Test if the get method works as expected."""
-        mock.return_value = (SUCCESS200HEADERS, JSONBODY)
+        mock.return_value = RESPONSE200
 
         zoneid = uuid.uuid4()
 
@@ -46,14 +45,14 @@ class TestZoneMethods(unittest.TestCase):
         args, kwargs = mock.call_args
 
         # Check that the mock function is called with the rights args.
-        self.assertEqual(args[0], f"{BASE_API_URL}/zone/" f"{zoneid}")
-        self.assertEqual(args[1], "GET")
-        self.assertEqual(kwargs["body"], None)
+        self.assertEqual(args[1], f"{BASE_API_URL}/zone/" f"{zoneid}")
+        self.assertEqual(args[0], "GET")
+        self.assertEqual(kwargs["data"], None)
 
-    @patch("httplib2.Http.request")
+    @patch("requests.Session.request")
     def test_start(self, mock):
         """Test if the start method works as expected."""
-        mock.return_value = (SUCCESS204HEADERS, None)
+        mock.return_value = RESPONSE204
 
         zoneid = uuid.uuid4()
         duration = randrange(10800)
@@ -63,18 +62,18 @@ class TestZoneMethods(unittest.TestCase):
         args, kwargs = mock.call_args
 
         # Check that the mock function is called with the rights args.
-        self.assertEqual(args[0], f"{BASE_API_URL}/zone/start")
-        self.assertEqual(args[1], "PUT")
-        self.assertEqual(kwargs["body"], {"id": zoneid, "duration": duration})
+        self.assertEqual(args[1], f"{BASE_API_URL}/zone/start")
+        self.assertEqual(args[0], "PUT")
+        self.assertEqual(kwargs["data"], {"id": zoneid, "duration": duration})
 
         # Check that values should be within range.
         self.assertRaises(AssertionError, self.zone.start, zoneid, -1)
         self.assertRaises(AssertionError, self.zone.start, zoneid, 10801)
 
-    @patch("httplib2.Http.request")
+    @patch("requests.Session.request")
     def test_start_multiple(self, mock):
         """Test if the start multiple method works as expected."""
-        mock.return_value = (SUCCESS204HEADERS, None)
+        mock.return_value = RESPONSE204
         zones = [
             {"id": data[0], "duration": data[1], "sortOrder": count}
             for (count, data) in enumerate(self.zones, 1)
@@ -84,10 +83,10 @@ class TestZoneMethods(unittest.TestCase):
         args, kwargs = mock.call_args
 
         # Check that the mock function is called with the rights args.
-        self.assertEqual(args[0], f"{BASE_API_URL}/zone/start_multiple")
-        self.assertEqual(args[1], "PUT")
+        self.assertEqual(args[1], f"{BASE_API_URL}/zone/start_multiple")
+        self.assertEqual(args[0], "PUT")
         self.assertEqual(
-            kwargs["body"],
+            kwargs["data"],
             {
                 "zones": [
                     {"id": data[0], "duration": data[1], "sortOrder": count}
@@ -96,10 +95,10 @@ class TestZoneMethods(unittest.TestCase):
             },
         )
 
-    @patch("httplib2.Http.request")
+    @patch("requests.Session.request")
     def test_set_moisture_percent(self, mock):
         """Test if the set moisture percent method works as expected."""
-        mock.return_value = (SUCCESS204HEADERS, None)
+        mock.return_value = RESPONSE204
 
         zoneid = uuid.uuid4()
         percent = round(random.random(), 1)
@@ -109,9 +108,9 @@ class TestZoneMethods(unittest.TestCase):
         args, kwargs = mock.call_args
 
         # Check that the mock function is called with the rights args.
-        self.assertEqual(args[0], f"{BASE_API_URL}/zone/setMoisturePercent")
-        self.assertEqual(args[1], "PUT")
-        self.assertEqual(kwargs["body"], {"id": zoneid, "percent": percent})
+        self.assertEqual(args[1], f"{BASE_API_URL}/zone/setMoisturePercent")
+        self.assertEqual(args[0], "PUT")
+        self.assertEqual(kwargs["data"], {"id": zoneid, "percent": percent})
 
         # Check that values should be within range.
         self.assertRaises(
@@ -121,10 +120,10 @@ class TestZoneMethods(unittest.TestCase):
             AssertionError, self.zone.set_moisture_percent, zoneid, 1.1
         )
 
-    @patch("httplib2.Http.request")
+    @patch("requests.Session.request")
     def test_set_moisture_level(self, mock):
         """Test if the set moisture level method works as expected."""
-        mock.return_value = (SUCCESS204HEADERS, None)
+        mock.return_value = RESPONSE204
 
         zoneid = uuid.uuid4()
         level = round(random.uniform(0.0, 100.0), 2)
@@ -134,14 +133,14 @@ class TestZoneMethods(unittest.TestCase):
         args, kwargs = mock.call_args
 
         # Check that the mock function is called with the rights args.
-        self.assertEqual(args[0], f"{BASE_API_URL}/zone/setMoistureLevel")
-        self.assertEqual(args[1], "PUT")
-        self.assertEqual(kwargs["body"], {"id": zoneid, "level": level})
+        self.assertEqual(args[1], f"{BASE_API_URL}/zone/setMoistureLevel")
+        self.assertEqual(args[0], "PUT")
+        self.assertEqual(kwargs["data"], {"id": zoneid, "level": level})
 
-    @patch("httplib2.Http.request")
+    @patch("requests.Session.request")
     def test_zoneschedule(self, mock):
         """Test if the zoneschedule helper class works as expected."""
-        mock.return_value = (SUCCESS204HEADERS, None)
+        mock.return_value = RESPONSE204
 
         zoneschedule = self.zone.schedule()
         for zone in self.zones:
@@ -151,10 +150,10 @@ class TestZoneMethods(unittest.TestCase):
         args, kwargs = mock.call_args
 
         # Check that the mock function is called with the rights args.
-        self.assertEqual(args[0], f"{BASE_API_URL}/zone/start_multiple")
-        self.assertEqual(args[1], "PUT")
+        self.assertEqual(args[1], f"{BASE_API_URL}/zone/start_multiple")
+        self.assertEqual(args[0], "PUT")
         self.assertEqual(
-            kwargs["body"],
+            kwargs["data"],
             {
                 "zones": [
                     {"id": data[0], "duration": data[1], "sortOrder": count}
@@ -163,10 +162,10 @@ class TestZoneMethods(unittest.TestCase):
             },
         )
 
-    @patch("httplib2.Http.request")
+    @patch("requests.Session.request")
     def test_zoneschedule_with_statement(self, mock):
         """Test if the zoneschedule with statement works as expected."""
-        mock.return_value = (SUCCESS204HEADERS, None)
+        mock.return_value = RESPONSE204
 
         with ZoneSchedule(self.zone) as zoneschedule:
             for zone in self.zones:
@@ -175,10 +174,10 @@ class TestZoneMethods(unittest.TestCase):
         args, kwargs = mock.call_args
 
         # Check that the mock function is called with the rights args.
-        self.assertEqual(args[0], f"{BASE_API_URL}/zone/start_multiple")
-        self.assertEqual(args[1], "PUT")
+        self.assertEqual(args[1], f"{BASE_API_URL}/zone/start_multiple")
+        self.assertEqual(args[0], "PUT")
         self.assertEqual(
-            kwargs["body"],
+            kwargs["data"],
             {
                 "zones": [
                     {"id": data[0], "duration": data[1], "sortOrder": count}
