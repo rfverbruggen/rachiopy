@@ -1,19 +1,50 @@
 """Zone module handling /zone/ API calls."""
 
+from decimal import Decimal
+
 from rachiopy.rachioobject import RachioObject
 
 
 class Zone(RachioObject):
     """Zone class with methods for /zone/ API calls."""
 
-    def start(self, zone_id, duration):
-        """Start a zone."""
+    def start(self, zone_id: str, duration: int):
+        """Start a zone.
+        
+        For more info of the content in the response see:
+        https://rachio.readme.io/docs/zonestart
+
+        :param zone_id: Zone's unique id
+        :type zone_id: str
+
+        :param duration: Duration in seconds (Range is 0 - 10800 (3 Hours) )
+        :type duration: int
+
+        :return: The return value is a tuple of (response, content), the first
+            being and instance of the httplib2.Response class, the second
+            being a string that contains the response entity body (Python
+            object if it contains JSON).
+        :rtype: tuple
+        """
         assert 0 <= duration <= 10800, "duration must be in range 0-10800"
         payload = {"id": zone_id, "duration": duration}
         return self.put_request("zone/start", payload)
 
     def start_multiple(self, zones):
-        """Start multiple zones."""
+        """Start multiple zones.
+        
+        For more info of the content in the response see:
+        https://rachio.readme.io/docs/publiczonestart_multiple
+
+        :param zones: Zone's unique id, duration, and sort order
+        :type zones: Object[]
+
+        :return: The return value is a tuple of (response, content), the first
+            being and instance of the httplib2.Response class, the second
+            being a string that contains the response entity body (Python
+            object if it contains JSON).
+        :rtype: tuple
+        """
         payload = {"zones": zones}
         return self.put_request("zone/start_multiple", payload)
 
@@ -21,19 +52,64 @@ class Zone(RachioObject):
         """Create an empty zone schedule."""
         return ZoneSchedule(self)
 
-    def set_moisture_percent(self, zone_id, percent):
-        """Set zone moisture percent."""
+    def set_moisture_percent(self, zone_id: str, percent: Decimal):
+        """Set zone moisture percent.
+        
+        For more info of the content in the response see:
+        https://rachio.readme.io/docs/publiczonesetmoisturepercent
+
+        :param zone_id: Zone's unique id
+        :type zone_id: str
+
+        :param percent: Soil moisture percent (Range is 0 - 1 )
+        :type percent: Decimal
+
+        :return: The return value is a tuple of (response, content), the first
+            being and instance of the httplib2.Response class, the second
+            being a string that contains the response entity body (Python
+            object if it contains JSON).
+        :rtype: tuple
+        """
         assert 0 <= percent <= 1, "percent must be in range 0.0-1.0"
         payload = {"id": zone_id, "percent": percent}
         return self.put_request("zone/setMoisturePercent", payload)
 
-    def set_moisture_level(self, zone_id, level):
-        """Set zone moisture level."""
+    def set_moisture_level(self, zone_id: str, level: Decimal):
+        """Set zone moisture level.
+        
+        For more info of the content in the response see:
+        https://rachio.readme.io/docs/publiczonesetmoisturelevel
+
+        :param zone_id: Zone's unique id
+        :type zone_id: str
+
+        :param level: Soil moisture level in mm (Range is 0 - Maximum Moisture in mm (depth of water + (10% depth of water))
+        :type level: Decimal
+
+        :return: The return value is a tuple of (response, content), the first
+            being and instance of the httplib2.Response class, the second
+            being a string that contains the response entity body (Python
+            object if it contains JSON).
+        :rtype: tuple
+        """
         payload = {"id": zone_id, "level": level}
         return self.put_request("zone/setMoistureLevel", payload)
 
-    def get(self, zone_id):
-        """Retrieve the information for a zone entity."""
+    def get(self, zone_id: str):
+        """Retrieve the information for a zone entity.
+        
+        For more info of the content in the response see:
+        https://rachio.readme.io/docs/publiczoneid
+
+        :param zone_id: Zone's unique id
+        :type zone_id: str
+
+        :return: The return value is a tuple of (response, content), the first
+            being and instance of the httplib2.Response class, the second
+            being a string that contains the response entity body (Python
+            object if it contains JSON).
+        :rtype: tuple
+        """
         path = f"zone/{zone_id}"
         return self.get_request(path)
 
@@ -41,13 +117,20 @@ class Zone(RachioObject):
 class ZoneSchedule:
     """Help with starting multiple zones."""
 
-    def __init__(self, zone_api):
+    def __init__(self, zone_api: Zone):
         """Zoneschedule class initializer."""
         self._api = zone_api
         self._zones = []
 
-    def enqueue(self, zone_id, duration):
-        """Add a zone and duration to the schedule."""
+    def enqueue(self, zone_id: str, duration: int):
+        """Add a zone and duration to the schedule.
+        
+        :param zone_id: Zone's unique id
+        :type zone_id: str
+
+        :param duration: Duration in seconds (Range is 0 - 10800 (3 Hours) )
+        :type duration: int
+        """
         self._zones.append((zone_id, duration))
 
     def start(self):

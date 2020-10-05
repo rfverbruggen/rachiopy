@@ -9,6 +9,9 @@ class Device(RachioObject):
     def get(self, dev_id: str):
         """Retrieve the information for a device entity.
 
+        For more info of the content in the response see:
+        https://rachio.readme.io/docs/publicdeviceid
+
         :param dev_id: Device's unique id
         :type dev_id: str
 
@@ -24,6 +27,9 @@ class Device(RachioObject):
     def current_schedule(self, dev_id: str):
         """Retrieve current schedule running, if any.
 
+        For more info of the content in the response see:
+        https://rachio.readme.io/docs/publicdeviceidcurrent_schedule
+
         :param dev_id: Device's unique id
         :type dev_id: str
 
@@ -37,12 +43,34 @@ class Device(RachioObject):
         return self.get_request(path)
 
     def event(self, dev_id: str, starttime: int, endtime: int):
-        """Retrieve events for a device entity."""
+        """Retrieve events for a device entity.
+        
+        For more info of the content in the response see:
+        https://rachio.readme.io/docs/publicdeviceideventstarttimestarttimeendtimeendtim
+        
+        :param dev_id: Device's unique id
+        :type dev_id: str
+
+        :param starttime: Query start time milliseconds unix epoch
+        :type starttime: int
+
+        :param endtime: Query end time milliseconds unix epoch
+        :type endtime: int
+
+        :return: The return value is a tuple of (response, content), the first
+            being and instance of the httplib2.Response class, the second
+            being a string that contains the response entity body (Python
+            object if it contains JSON).
+        :rtype: tuple
+        """
         path = f"device/{dev_id}/event?startTime={starttime}&endTime={endtime}"
         return self.get_request(path)
 
     def forecast(self, dev_id: str, units="US"):
         """Retrieve current and predicted forecast.
+
+        For more info of the content in the response see:
+        https://rachio.readme.io/docs/publicdeviceidforecastunitsunits
 
         :param dev_id: Device's unique id
         :type dev_id: str
@@ -63,6 +91,9 @@ class Device(RachioObject):
     def stop_water(self, dev_id: str):
         """Stop all watering on device.
 
+        For more info of the content in the response see:
+        https://rachio.readme.io/docs/devicestop_water
+
         :param dev_id: Device's unique id
         :type dev_id: str
 
@@ -77,6 +108,9 @@ class Device(RachioObject):
 
     def rain_delay(self, dev_id: str, duration: int):
         """Rain delay device.
+
+        For more info of the content in the response see:
+        https://rachio.readme.io/docs/devicestop_water
 
         :param dev_id: Device's unique id
         :type dev_id: str
@@ -99,6 +133,9 @@ class Device(RachioObject):
 
         schedules, weather intelligence, water budget, etc.
 
+        For more info of the content in the response see:
+        https://rachio.readme.io/docs/publicdeviceon-1
+
         :param dev_id: Device's unique id
         :type dev_id: str
 
@@ -116,6 +153,9 @@ class Device(RachioObject):
 
         schedules, weather intelligence, water budget, etc.
 
+        For more info of the content in the response see:
+        https://rachio.readme.io/docs/publicdeviceoff-1
+
         :param dev_id: Device's unique id
         :type dev_id: str
 
@@ -130,6 +170,9 @@ class Device(RachioObject):
 
     def pause_zone_run(self, dev_id: str, duration: int):
         """Pause a zone run for device.
+
+        For more info of the content in the response see:
+        https://rachio.readme.io/docs/publicdevicepause_zone_run
 
         :param dev_id: Device's unique id
         :type dev_id: str
@@ -149,6 +192,9 @@ class Device(RachioObject):
 
     def resume_zone_run(self, dev_id: str):
         """Resume a zone run for device.
+
+        For more info of the content in the response see:
+        https://rachio.readme.io/docs/publicdeviceresume_zone_run
 
         :param dev_id: Device's unique id
         :type dev_id: str
