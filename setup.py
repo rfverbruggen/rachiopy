@@ -1,6 +1,5 @@
 """Rachiopy setup script."""
 from setuptools import find_packages, setup
-from datetime import datetime
 
 VERSION = "1.0.0"
 
