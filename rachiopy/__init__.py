@@ -1,60 +1,27 @@
 """Main rachiopy module."""
 
-import json
-import httplib2
-
+from rachiopy.rachioobject import RachioObject
 from rachiopy.person import Person
 from rachiopy.device import Device
-from rachiopy.zone import Zone
-from rachiopy.schedulerule import Schedulerule
 from rachiopy.flexschedulerule import FlexSchedulerule
 from rachiopy.notification import Notification
+from rachiopy.schedulerule import Schedulerule
+from rachiopy.zone import Zone
 
-_SERVER = 'https://api.rach.io/1/public'
-_HTTP = httplib2.Http()
 
+class Rachio(RachioObject):
+    """Object representing the Rachio API."""
 
-class Rachio(object):
-    """Represent the Rachio API."""
+    def __init__(self, authtoken: str):
+        """Initialze the Rachio API wrapper.
 
-    def __init__(self, authtoken):
-        """Rachio class initializer."""
-        self._headers = {'Content-Type': 'application/json',
-                         'Authorization': 'Bearer %s' % authtoken}
-
-        self.person = Person(self)
-        self.device = Device(self)
-        self.zone = Zone(self)
-        self.schedulerule = Schedulerule(self)
-        self.flexschedulerule = FlexSchedulerule(self)
-        self.notification = Notification(self)
-
-    def _request(self, path, method, body=None):
-        """Make a request from the API."""
-        url = '/'.join([_SERVER, path])
-        (resp, content) = _HTTP.request(url, method,
-                                        headers=self._headers, body=body)
-
-        content_type = resp.get('content-type')
-        if content_type and content_type.startswith('application/json'):
-            content = json.loads(content.decode('UTF-8'))
-
-        return (resp, content)
-
-    def get(self, path):
-        """Make a GET request from the API."""
-        return self._request(path, 'GET')
-
-    def delete(self, path):
-        """Make a DELETE request from the API."""
-        return self._request(path, 'DELETE')
-
-    def put(self, path, payload):
-        """Make a PUT request from the API."""
-        body = json.dumps(payload)
-        return self._request(path, 'PUT', body)
-
-    def post(self, path, payload):
-        """Make a POST request from the API."""
-        body = json.dumps(payload)
-        return self._request(path, 'POST', body)
+        :param authtoken: The API authentication token.
+        :type authtoken: str
+        """
+        super().__init__(authtoken)
+        self.person = Person(authtoken)
+        self.device = Device(authtoken)
+        self.flexschedulerule = FlexSchedulerule(authtoken)
+        self.notification = Notification(authtoken)
+        self.schedulerule = Schedulerule(authtoken)
+        self.zone = Zone(authtoken)
