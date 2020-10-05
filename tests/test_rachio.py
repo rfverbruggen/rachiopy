@@ -1,23 +1,21 @@
-"""Rachio basic test module"""
+"""Rachio object test module"""
 
 import unittest
-from unittest.mock import patch, Mock
 from rachiopy import Rachio
+from tests.constants import AUTHTOKEN
 
 
 class TestRachioMethods(unittest.TestCase):
-    """Class containing the basic test cases."""
+    """Class containing the Rachio object test cases."""
 
-    @patch('rachiopy.Person.get_info')
-    def test_unauthorized(self, mock_get_info):
-        """Test with invalid authtoken."""
-        mock_get_info.return_value = Mock()
-        mock_get_info.return_value.json = {
-            "errors": [{"message": "The client is not authorized."}]
-        }
-        mock_get_info.return_value.status_code = 401
+    def test_init(self):
+        """Test if the constructor works as expected."""
+        rachio = Rachio(AUTHTOKEN)
 
-        rachio = Rachio("")
-        response = rachio.person.get_info()
-
-        assert response.status_code == 401
+        self.assertEqual(rachio.authtoken, AUTHTOKEN)
+        self.assertEqual(rachio.person.authtoken, AUTHTOKEN)
+        self.assertEqual(rachio.device.authtoken, AUTHTOKEN)
+        self.assertEqual(rachio.zone.authtoken, AUTHTOKEN)
+        self.assertEqual(rachio.schedulerule.authtoken, AUTHTOKEN)
+        self.assertEqual(rachio.flexschedulerule.authtoken, AUTHTOKEN)
+        self.assertEqual(rachio.notification.authtoken, AUTHTOKEN)
