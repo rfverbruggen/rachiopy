@@ -18,7 +18,7 @@ jobs:
         python -m pip install -r requirements.txt
     
     - name: Run unit tests
-      run: python -m unittest discover -v []
+      run: python -m unittest discover -v tests
     - name: Build distribution
       run: python setup.py sdist bdist_wheel
     - name: Publish distribution to Test PyPI
