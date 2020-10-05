@@ -1,7 +1,10 @@
 """Rachiopy setup script."""
 from setuptools import find_packages, setup
+from datetime import datetime
 
-VERSION = "0.2.2-dev"
+NOW = datetime.now().strftime("%m/%d/%Y%H%M%S")
+
+VERSION = f"1.0.0-dev{NOW}"
 
 GITHUB_USERNAME = "rfverbruggen"
 GITHUB_REPOSITORY = "rachiopy"
