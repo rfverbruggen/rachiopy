@@ -6,8 +6,7 @@ from unittest.mock import patch
 from random import randrange
 
 from rachiopy import Device
-from tests.constants import BASE_API_URL, AUTHTOKEN, SUCCESS200HEADERS
-from tests.constants import SUCCESS204HEADERS, JSONBODY
+from tests.constants import BASE_API_URL, AUTHTOKEN, RESPONSE200, RESPONSE204
 
 
 class TestDeviceMethods(unittest.TestCase):
@@ -20,10 +19,10 @@ class TestDeviceMethods(unittest.TestCase):
         """Test if the constructor works as expected."""
         self.assertEqual(self.device.authtoken, AUTHTOKEN)
 
-    @patch("httplib2.Http.request")
+    @patch("requests.Session.request")
     def test_get(self, mock):
         """Test if the get method works as expected."""
-        mock.return_value = (SUCCESS200HEADERS, JSONBODY)
+        mock.return_value = RESPONSE200
 
         deviceid = uuid.uuid4()
 
@@ -33,15 +32,15 @@ class TestDeviceMethods(unittest.TestCase):
 
         # Check that the mock function is called with the rights args.
         self.assertEqual(
-            args[0], f"{BASE_API_URL}/device/" f"{deviceid}",
+            args[1], f"{BASE_API_URL}/device/" f"{deviceid}",
         )
-        self.assertEqual(args[1], "GET")
-        self.assertEqual(kwargs["body"], None)
+        self.assertEqual(args[0], "GET")
+        self.assertEqual(kwargs["data"], None)
 
-    @patch("httplib2.Http.request")
+    @patch("requests.Session.request")
     def test_current_schedule(self, mock):
         """Test if the current schedule method works as expected."""
-        mock.return_value = (SUCCESS200HEADERS, JSONBODY)
+        mock.return_value = RESPONSE200
 
         deviceid = uuid.uuid4()
 
@@ -51,15 +50,15 @@ class TestDeviceMethods(unittest.TestCase):
 
         # Check that the mock funciton is called with the rights args.
         self.assertEqual(
-            args[0], f"{BASE_API_URL}/device/" f"{deviceid}/current_schedule",
+            args[1], f"{BASE_API_URL}/device/" f"{deviceid}/current_schedule",
         )
-        self.assertEqual(args[1], "GET")
-        self.assertEqual(kwargs["body"], None)
+        self.assertEqual(args[0], "GET")
+        self.assertEqual(kwargs["data"], None)
 
-    @patch("httplib2.Http.request")
+    @patch("requests.Session.request")
     def test_event(self, mock):
         """Test if the event method works as expected."""
-        mock.return_value = (SUCCESS200HEADERS, JSONBODY)
+        mock.return_value = RESPONSE200
 
         deviceid = uuid.uuid4()
         starttime = 1414818000000
@@ -71,19 +70,19 @@ class TestDeviceMethods(unittest.TestCase):
 
         # Check that the mock funciton is called with the rights args.
         self.assertEqual(
-            args[0],
+            args[1],
             f"{BASE_API_URL}/device/"
             f"{deviceid}/event?startTime="
             f"{starttime}&endTime="
             f"{endtime}",
         )
-        self.assertEqual(args[1], "GET")
-        self.assertEqual(kwargs["body"], None)
+        self.assertEqual(args[0], "GET")
+        self.assertEqual(kwargs["data"], None)
 
-    @patch("httplib2.Http.request")
+    @patch("requests.Session.request")
     def test_forecast(self, mock):
         """Test if the forecast method works as expected."""
-        mock.return_value = (SUCCESS200HEADERS, JSONBODY)
+        mock.return_value = RESPONSE200
 
         deviceid = uuid.uuid4()
 
@@ -93,10 +92,10 @@ class TestDeviceMethods(unittest.TestCase):
 
         # Check that the mock funciton is called with the rights args.
         self.assertEqual(
-            args[0], f"{BASE_API_URL}/device/" f"{deviceid}/forecast?units=US",
+            args[1], f"{BASE_API_URL}/device/" f"{deviceid}/forecast?units=US",
         )
-        self.assertEqual(args[1], "GET")
-        self.assertEqual(kwargs["body"], None)
+        self.assertEqual(args[0], "GET")
+        self.assertEqual(kwargs["data"], None)
 
         self.device.forecast(deviceid, "US")
 
@@ -104,10 +103,10 @@ class TestDeviceMethods(unittest.TestCase):
 
         # Check that the mock funciton is called with the rights args.
         self.assertEqual(
-            args[0], f"{BASE_API_URL}/device/" f"{deviceid}/forecast?units=US",
+            args[1], f"{BASE_API_URL}/device/" f"{deviceid}/forecast?units=US",
         )
-        self.assertEqual(args[1], "GET")
-        self.assertEqual(kwargs["body"], None)
+        self.assertEqual(args[0], "GET")
+        self.assertEqual(kwargs["data"], None)
 
         self.device.forecast(deviceid, "METRIC")
 
@@ -115,19 +114,19 @@ class TestDeviceMethods(unittest.TestCase):
 
         # Check that the mock funciton is called with the rights args.
         self.assertEqual(
-            args[0],
+            args[1],
             f"{BASE_API_URL}/device/" f"{deviceid}/forecast?units=METRIC",
         )
-        self.assertEqual(args[1], "GET")
-        self.assertEqual(kwargs["body"], None)
+        self.assertEqual(args[0], "GET")
+        self.assertEqual(kwargs["data"], None)
 
         # Check that values should be within range.
         self.assertRaises(AssertionError, self.device.forecast, deviceid, "")
 
-    @patch("httplib2.Http.request")
+    @patch("requests.Session.request")
     def test_stop_water(self, mock):
         """Test if the stop water method works as expected."""
-        mock.return_value = (SUCCESS204HEADERS, None)
+        mock.return_value = RESPONSE204
 
         deviceid = uuid.uuid4()
 
@@ -137,15 +136,15 @@ class TestDeviceMethods(unittest.TestCase):
 
         # Check that the mock funciton is called with the rights args.
         self.assertEqual(
-            args[0], f"{BASE_API_URL}/device/stop_water",
+            args[1], f"{BASE_API_URL}/device/stop_water",
         )
-        self.assertEqual(args[1], "PUT")
-        self.assertEqual(kwargs["body"], {"id": deviceid})
+        self.assertEqual(args[0], "PUT")
+        self.assertEqual(kwargs["data"], {"id": deviceid})
 
-    @patch("httplib2.Http.request")
+    @patch("requests.Session.request")
     def test_rain_delay(self, mock):
         """Test if the rain delay method works as expected."""
-        mock.return_value = (SUCCESS204HEADERS, None)
+        mock.return_value = RESPONSE204
 
         deviceid = uuid.uuid4()
         duration = randrange(604800)
@@ -156,11 +155,11 @@ class TestDeviceMethods(unittest.TestCase):
 
         # Check that the mock funciton is called with the rights args.
         self.assertEqual(
-            args[0], f"{BASE_API_URL}/device/rain_delay",
+            args[1], f"{BASE_API_URL}/device/rain_delay",
         )
-        self.assertEqual(args[1], "PUT")
+        self.assertEqual(args[0], "PUT")
         self.assertEqual(
-            kwargs["body"], {"id": deviceid, "duration": duration}
+            kwargs["data"], {"id": deviceid, "duration": duration}
         )
 
         # Check that values should be within range.
@@ -169,10 +168,10 @@ class TestDeviceMethods(unittest.TestCase):
             AssertionError, self.device.rain_delay, deviceid, 604801
         )
 
-    @patch("httplib2.Http.request")
+    @patch("requests.Session.request")
     def test_turn_on(self, mock):
         """Test if the turn on method works as expected."""
-        mock.return_value = (SUCCESS204HEADERS, None)
+        mock.return_value = RESPONSE204
 
         deviceid = uuid.uuid4()
 
@@ -182,15 +181,15 @@ class TestDeviceMethods(unittest.TestCase):
 
         # Check that the mock funciton is called with the rights args.
         self.assertEqual(
-            args[0], f"{BASE_API_URL}/device/on",
+            args[1], f"{BASE_API_URL}/device/on",
         )
-        self.assertEqual(args[1], "PUT")
-        self.assertEqual(kwargs["body"], {"id": deviceid})
+        self.assertEqual(args[0], "PUT")
+        self.assertEqual(kwargs["data"], {"id": deviceid})
 
-    @patch("httplib2.Http.request")
+    @patch("requests.Session.request")
     def test_turn_off(self, mock):
         """Test if the turn off method works as expected."""
-        mock.return_value = (SUCCESS204HEADERS, None)
+        mock.return_value = RESPONSE204
 
         deviceid = uuid.uuid4()
 
@@ -200,15 +199,15 @@ class TestDeviceMethods(unittest.TestCase):
 
         # Check that the mock funciton is called with the rights args.
         self.assertEqual(
-            args[0], f"{BASE_API_URL}/device/off",
+            args[1], f"{BASE_API_URL}/device/off",
         )
-        self.assertEqual(args[1], "PUT")
-        self.assertEqual(kwargs["body"], {"id": deviceid})
+        self.assertEqual(args[0], "PUT")
+        self.assertEqual(kwargs["data"], {"id": deviceid})
 
-    @patch("httplib2.Http.request")
+    @patch("requests.Session.request")
     def test_pause_zone_run(self, mock):
         """Test if the pause zone run method works as expected."""
-        mock.return_value = (SUCCESS204HEADERS, None)
+        mock.return_value = RESPONSE204
 
         deviceid = uuid.uuid4()
         duration = randrange(3600)
@@ -219,11 +218,11 @@ class TestDeviceMethods(unittest.TestCase):
 
         # Check that the mock funciton is called with the rights args.
         self.assertEqual(
-            args[0], f"{BASE_API_URL}/device/pause_zone_run",
+            args[1], f"{BASE_API_URL}/device/pause_zone_run",
         )
-        self.assertEqual(args[1], "PUT")
+        self.assertEqual(args[0], "PUT")
         self.assertEqual(
-            kwargs["body"], {"id": deviceid, "duration": duration}
+            kwargs["data"], {"id": deviceid, "duration": duration}
         )
 
         # Check that values should be within range.
@@ -234,10 +233,10 @@ class TestDeviceMethods(unittest.TestCase):
             AssertionError, self.device.pause_zone_run, deviceid, 3601
         )
 
-    @patch("httplib2.Http.request")
+    @patch("requests.Session.request")
     def test_resume_zone_run(self, mock):
         """Test if the resume zone run method works as expected."""
-        mock.return_value = (SUCCESS204HEADERS, None)
+        mock.return_value = RESPONSE204
 
         deviceid = uuid.uuid4()
 
@@ -247,7 +246,7 @@ class TestDeviceMethods(unittest.TestCase):
 
         # Check that the mock funciton is called with the rights args.
         self.assertEqual(
-            args[0], f"{BASE_API_URL}/device/resume_zone_run",
+            args[1], f"{BASE_API_URL}/device/resume_zone_run",
         )
-        self.assertEqual(args[1], "PUT")
-        self.assertEqual(kwargs["body"], {"id": deviceid})
+        self.assertEqual(args[0], "PUT")
+        self.assertEqual(kwargs["data"], {"id": deviceid})
