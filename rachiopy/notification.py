@@ -18,24 +18,32 @@ class Notification(RachioObject):
         path = f"notification/{dev_id}/webhook"
         return self.get_request(path)
 
-    def post_webhook(self, dev_id, external_id, url, event_types):
+    def add(self, dev_id, external_id, url, event_types):
         """Add a webhook to a device.
 
         externalId can be used as opaque data that
         is tied to your company, and passed back in each webhook event
         response.
         """
-        payload = {'device': {'id': dev_id}, 'externalId': external_id,
-                   'url': url, 'eventTypes': event_types}
+        payload = {
+            "device": {"id": dev_id},
+            "externalId": external_id,
+            "url": url,
+            "eventTypes": event_types,
+        }
         return self.post_request("notification/webhook", payload)
 
-    def put_webhook(self, hook_id, external_id, url, event_types):
+    def update(self, hook_id, external_id, url, event_types):
         """Update a webhook."""
-        payload = {'id': hook_id, 'externalId': external_id,
-                   'url': url, 'eventTypes': event_types}
+        payload = {
+            "id": hook_id,
+            "externalId": external_id,
+            "url": url,
+            "eventTypes": event_types,
+        }
         return self.put_request("notification/webhook", payload)
 
-    def delete_webhook(self, hook_id):
+    def delete(self, hook_id):
         """Remove a webhook."""
         path = f"notification/webhook/{hook_id}"
         return self.delete_request(path)

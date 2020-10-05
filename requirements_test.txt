@@ -1,6 +1,5 @@
 flake8
 pydocstyle
 pylint
-pytest
-pytest-cov
-coveralls
+coverage
+jsonschema

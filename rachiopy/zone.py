@@ -8,6 +8,7 @@ class Zone(RachioObject):
 
     def start(self, zone_id, duration):
         """Start a zone."""
+        assert 0 <= duration <= 10800, "duration must be in range 0-10800"
         payload = {"id": zone_id, "duration": duration}
         return self.put_request("zone/start", payload)
 
@@ -22,6 +23,7 @@ class Zone(RachioObject):
 
     def set_moisture_percent(self, zone_id, percent):
         """Set zone moisture percent."""
+        assert 0 <= percent <= 1, "percent must be in range 0.0-1.0"
         payload = {"id": zone_id, "percent": percent}
         return self.put_request("zone/setMoisturePercent", payload)
 
@@ -36,7 +38,7 @@ class Zone(RachioObject):
         return self.get_request(path)
 
 
-class ZoneSchedule():
+class ZoneSchedule:
     """Help with starting multiple zones."""
 
     def __init__(self, zone_api):
@@ -50,8 +52,10 @@ class ZoneSchedule():
 
     def start(self):
         """Start the schedule."""
-        zones = [{"id": data[0], "duration": data[1], "sortOrder": count}
-                 for (count, data) in enumerate(self._zones, 1)]
+        zones = [
+            {"id": data[0], "duration": data[1], "sortOrder": count}
+            for (count, data) in enumerate(self._zones, 1)
+        ]
         self._api.start_multiple(zones)
 
     def __enter__(self):
