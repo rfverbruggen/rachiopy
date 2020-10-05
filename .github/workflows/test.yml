@@ -1,16 +1,18 @@
-name: Python application
-
-on: [push]
+name: Run unit tests
+on: [push, pull_request]
 
 jobs:
-  build:
-
+  test:
+    # The type of runner that the job will run on
     runs-on: ubuntu-latest
+
     strategy:
       matrix:
         python-version: [3.6, 3.7, 3.8]
 
+    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
+    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
     - uses: actions/checkout@v2
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v2
@@ -19,9 +21,7 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install tox
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
         if [ -f requirements_test.txt ]; then pip install -r requirements_test.txt; fi
-    - name: Run Tox
-        # Run tox using the version of Python in `PATH`
-      run: tox -e py
+    - name: Run unittests
+      run: python -m unittest discover -v []
