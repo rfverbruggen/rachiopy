@@ -1,5 +1,6 @@
 """Main rachiopy module."""
 
+
 from rachiopy.rachioobject import RachioObject
 from rachiopy.person import Person
 from rachiopy.device import Device
@@ -7,7 +8,6 @@ from rachiopy.flexschedulerule import FlexSchedulerule
 from rachiopy.notification import Notification
 from rachiopy.schedulerule import Schedulerule
 from rachiopy.zone import Zone
-
 
 class Rachio(RachioObject):
     """Object representing the Rachio API."""
