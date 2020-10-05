@@ -5,12 +5,8 @@ from unittest.mock import patch
 import uuid
 
 from rachiopy import FlexSchedulerule
-from tests.constants import (
-    BASE_API_URL,
-    AUTHTOKEN,
-    SUCCESS200HEADERS,
-    JSONBODY,
-)
+from tests.constants import BASE_API_URL, AUTHTOKEN, SUCCESS200HEADERS
+from tests.constants import JSONBODY
 
 
 class TestFlexScheduleRuleMethods(unittest.TestCase):

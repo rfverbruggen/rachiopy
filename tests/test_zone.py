@@ -8,13 +8,8 @@ import random
 from random import randrange
 from rachiopy import Zone
 from rachiopy.zone import ZoneSchedule
-from tests.constants import (
-    BASE_API_URL,
-    AUTHTOKEN,
-    SUCCESS200HEADERS,
-    SUCCESS204HEADERS,
-    JSONBODY,
-)
+from tests.constants import BASE_API_URL, AUTHTOKEN, SUCCESS200HEADERS
+from tests.constants import SUCCESS204HEADERS, JSONBODY
 
 
 class TestZoneMethods(unittest.TestCase):

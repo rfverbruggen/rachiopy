@@ -44,10 +44,10 @@ class Device(RachioObject):
 
     def event(self, dev_id: str, starttime: int, endtime: int):
         """Retrieve events for a device entity.
-        
+
         For more info of the content in the response see:
         https://rachio.readme.io/docs/publicdeviceideventstarttimestarttimeendtimeendtim
-        
+
         :param dev_id: Device's unique id
         :type dev_id: str
 

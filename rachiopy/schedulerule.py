@@ -10,7 +10,7 @@ class Schedulerule(RachioObject):
 
     def skip(self, sched_rule_id: str):
         """Skip a schedule rule (watering time).
-        
+
         For more info of the content in the response see:
         https://rachio.readme.io/docs/scheduleruleskip
 
@@ -27,7 +27,7 @@ class Schedulerule(RachioObject):
 
     def start(self, sched_rule_id: str):
         """Start a schedule rule (watering time).
-        
+
         For more info of the content in the response see:
         https://rachio.readme.io/docs/schedulerulestart
 
@@ -47,7 +47,7 @@ class Schedulerule(RachioObject):
 
         This adjustment amount will be applied to the overall run time of the
         selected schedule while overriding any current adjustments.
-        
+
         For more info of the content in the response see:
         https://rachio.readme.io/docs/publicscheduleruleseasonal_adjustment
 
@@ -68,7 +68,7 @@ class Schedulerule(RachioObject):
 
     def get(self, sched_rule_id: str):
         """Retrieve the information for a scheduleRule entity.
-        
+
         For more info of the content in the response see:
         https://rachio.readme.io/docs/publicscheduleruleid
 

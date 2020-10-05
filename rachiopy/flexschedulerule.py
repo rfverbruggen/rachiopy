@@ -8,7 +8,7 @@ class FlexSchedulerule(RachioObject):
 
     def get(self, flex_sched_rule_id: str):
         """Retrieve the information for a flexscheduleRule entity.
-        
+
         For more info of the content in the response see:
         https://rachio.readme.io/docs/publicflexscheduleruleid
 

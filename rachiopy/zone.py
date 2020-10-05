@@ -10,7 +10,7 @@ class Zone(RachioObject):
 
     def start(self, zone_id: str, duration: int):
         """Start a zone.
-        
+
         For more info of the content in the response see:
         https://rachio.readme.io/docs/zonestart
 
@@ -32,7 +32,7 @@ class Zone(RachioObject):
 
     def start_multiple(self, zones):
         """Start multiple zones.
-        
+
         For more info of the content in the response see:
         https://rachio.readme.io/docs/publiczonestart_multiple
 
@@ -54,7 +54,7 @@ class Zone(RachioObject):
 
     def set_moisture_percent(self, zone_id: str, percent: Decimal):
         """Set zone moisture percent.
-        
+
         For more info of the content in the response see:
         https://rachio.readme.io/docs/publiczonesetmoisturepercent
 
@@ -76,14 +76,15 @@ class Zone(RachioObject):
 
     def set_moisture_level(self, zone_id: str, level: Decimal):
         """Set zone moisture level.
-        
+
         For more info of the content in the response see:
         https://rachio.readme.io/docs/publiczonesetmoisturelevel
 
         :param zone_id: Zone's unique id
         :type zone_id: str
 
-        :param level: Soil moisture level in mm (Range is 0 - Maximum Moisture in mm (depth of water + (10% depth of water))
+        :param level: Soil moisture level in mm (Range is 0 - Maximum Moisture
+        in mm (depth of water + (10% depth of water))
         :type level: Decimal
 
         :return: The return value is a tuple of (response, content), the first
@@ -97,7 +98,7 @@ class Zone(RachioObject):
 
     def get(self, zone_id: str):
         """Retrieve the information for a zone entity.
-        
+
         For more info of the content in the response see:
         https://rachio.readme.io/docs/publiczoneid
 
@@ -124,7 +125,7 @@ class ZoneSchedule:
 
     def enqueue(self, zone_id: str, duration: int):
         """Add a zone and duration to the schedule.
-        
+
         :param zone_id: Zone's unique id
         :type zone_id: str
 
