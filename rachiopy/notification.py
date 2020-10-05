@@ -23,7 +23,7 @@ class Notification(RachioObject):
 
     def get_device_webhook(self, dev_id: str):
         """Retrieve all webhooks for a device.
-        
+
         For more info of the content in the response see:
         https://rachio.readme.io/docs/publicnotificationdeviceidwebhook
 
@@ -75,7 +75,7 @@ class Notification(RachioObject):
 
     def update(self, hook_id: str, external_id: str, url: str, event_types):
         """Update a webhook.
-        
+
         For more info of the content in the response see:
         https://rachio.readme.io/docs/publicnotificationwebhook-1
 
@@ -106,7 +106,7 @@ class Notification(RachioObject):
 
     def delete(self, hook_id: str):
         """Remove a webhook.
-        
+
         For more info of the content in the response see:
         https://rachio.readme.io/docs/publicnotificationwebhookid
 
@@ -116,20 +116,24 @@ class Notification(RachioObject):
         :return: The return value is a tuple of (response, content), the first
             being and instance of the httplib2.Response class, the second
             being a string that contains the response entity body.
-        :rtype: tuple"""
+        :rtype: tuple
+        """
         path = f"notification/webhook/{hook_id}"
         return self.delete_request(path)
 
     def get(self, hook_id: str):
-        """Get a webhook.For more info of the content in the response see:
+        """Get a webhook.
+
+        For more info of the content in the response see:
         https://rachio.readme.io/docs/publicnotificationdeviceidwebhook
-        
+
         :param hook_id: Webhook's unique id
         :type hook_id: str
 
         :return: The return value is a tuple of (response, content), the first
             being and instance of the httplib2.Response class, the second
             being a string that contains the response entity body.
-        :rtype: tuple"""
+        :rtype: tuple
+        """
         path = f"notification/webhook/{hook_id}"
         return self.get_request(path)

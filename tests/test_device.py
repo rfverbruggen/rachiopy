@@ -6,13 +6,8 @@ from unittest.mock import patch
 from random import randrange
 
 from rachiopy import Device
-from tests.constants import (
-    BASE_API_URL,
-    AUTHTOKEN,
-    SUCCESS200HEADERS,
-    SUCCESS204HEADERS,
-    JSONBODY,
-)
+from tests.constants import BASE_API_URL, AUTHTOKEN, SUCCESS200HEADERS
+from tests.constants import SUCCESS204HEADERS, JSONBODY
 
 
 class TestDeviceMethods(unittest.TestCase):

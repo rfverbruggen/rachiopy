@@ -5,13 +5,8 @@ from unittest.mock import patch
 import uuid
 
 from rachiopy import Schedulerule
-from tests.constants import (
-    BASE_API_URL,
-    AUTHTOKEN,
-    SUCCESS200HEADERS,
-    SUCCESS204HEADERS,
-    JSONBODY,
-)
+from tests.constants import BASE_API_URL, AUTHTOKEN, SUCCESS200HEADERS
+from tests.constants import SUCCESS204HEADERS, JSONBODY
 
 
 class TestScheduleRuleMethods(unittest.TestCase):
