@@ -4,6 +4,7 @@ import unittest
 from unittest.mock import patch
 import uuid
 import random
+import json
 
 from random import randrange
 from rachiopy import Zone
@@ -17,9 +18,9 @@ class TestZoneMethods(unittest.TestCase):
     def setUp(self):
         self.zone = Zone(AUTHTOKEN)
 
-        zone1id = uuid.uuid4()
-        zone2id = uuid.uuid4()
-        zone3id = uuid.uuid4()
+        zone1id = str(uuid.uuid4())
+        zone2id = str(uuid.uuid4())
+        zone3id = str(uuid.uuid4())
         duration1 = randrange(10800)
         duration2 = randrange(10800)
         duration3 = randrange(10800)
@@ -54,7 +55,7 @@ class TestZoneMethods(unittest.TestCase):
         """Test if the start method works as expected."""
         mock.return_value = RESPONSE204
 
-        zoneid = uuid.uuid4()
+        zoneid = str(uuid.uuid4())
         duration = randrange(10800)
 
         self.zone.start(zoneid, duration)
@@ -64,7 +65,9 @@ class TestZoneMethods(unittest.TestCase):
         # Check that the mock function is called with the rights args.
         self.assertEqual(args[1], f"{BASE_API_URL}/zone/start")
         self.assertEqual(args[0], "PUT")
-        self.assertEqual(kwargs["data"], {"id": zoneid, "duration": duration})
+        self.assertEqual(
+            kwargs["data"], json.dumps({"id": zoneid, "duration": duration})
+        )
 
         # Check that values should be within range.
         self.assertRaises(AssertionError, self.zone.start, zoneid, -1)
@@ -87,12 +90,18 @@ class TestZoneMethods(unittest.TestCase):
         self.assertEqual(args[0], "PUT")
         self.assertEqual(
             kwargs["data"],
-            {
-                "zones": [
-                    {"id": data[0], "duration": data[1], "sortOrder": count}
-                    for (count, data) in enumerate(self.zones, 1)
-                ]
-            },
+            json.dumps(
+                {
+                    "zones": [
+                        {
+                            "id": data[0],
+                            "duration": data[1],
+                            "sortOrder": count,
+                        }
+                        for (count, data) in enumerate(self.zones, 1)
+                    ]
+                },
+            ),
         )
 
     @patch("requests.Session.request")
@@ -100,7 +109,7 @@ class TestZoneMethods(unittest.TestCase):
         """Test if the set moisture percent method works as expected."""
         mock.return_value = RESPONSE204
 
-        zoneid = uuid.uuid4()
+        zoneid = str(uuid.uuid4())
         percent = round(random.random(), 1)
 
         self.zone.set_moisture_percent(zoneid, percent)
@@ -110,7 +119,9 @@ class TestZoneMethods(unittest.TestCase):
         # Check that the mock function is called with the rights args.
         self.assertEqual(args[1], f"{BASE_API_URL}/zone/setMoisturePercent")
         self.assertEqual(args[0], "PUT")
-        self.assertEqual(kwargs["data"], {"id": zoneid, "percent": percent})
+        self.assertEqual(
+            kwargs["data"], json.dumps({"id": zoneid, "percent": percent})
+        )
 
         # Check that values should be within range.
         self.assertRaises(
@@ -125,7 +136,7 @@ class TestZoneMethods(unittest.TestCase):
         """Test if the set moisture level method works as expected."""
         mock.return_value = RESPONSE204
 
-        zoneid = uuid.uuid4()
+        zoneid = str(uuid.uuid4())
         level = round(random.uniform(0.0, 100.0), 2)
 
         self.zone.set_moisture_level(zoneid, level)
@@ -135,7 +146,9 @@ class TestZoneMethods(unittest.TestCase):
         # Check that the mock function is called with the rights args.
         self.assertEqual(args[1], f"{BASE_API_URL}/zone/setMoistureLevel")
         self.assertEqual(args[0], "PUT")
-        self.assertEqual(kwargs["data"], {"id": zoneid, "level": level})
+        self.assertEqual(
+            kwargs["data"], json.dumps({"id": zoneid, "level": level})
+        )
 
     @patch("requests.Session.request")
     def test_zoneschedule(self, mock):
@@ -154,12 +167,18 @@ class TestZoneMethods(unittest.TestCase):
         self.assertEqual(args[0], "PUT")
         self.assertEqual(
             kwargs["data"],
-            {
-                "zones": [
-                    {"id": data[0], "duration": data[1], "sortOrder": count}
-                    for (count, data) in enumerate(self.zones, 1)
-                ]
-            },
+            json.dumps(
+                {
+                    "zones": [
+                        {
+                            "id": data[0],
+                            "duration": data[1],
+                            "sortOrder": count,
+                        }
+                        for (count, data) in enumerate(self.zones, 1)
+                    ]
+                }
+            ),
         )
 
     @patch("requests.Session.request")
@@ -178,10 +197,16 @@ class TestZoneMethods(unittest.TestCase):
         self.assertEqual(args[0], "PUT")
         self.assertEqual(
             kwargs["data"],
-            {
-                "zones": [
-                    {"id": data[0], "duration": data[1], "sortOrder": count}
-                    for (count, data) in enumerate(self.zones, 1)
-                ]
-            },
+            json.dumps(
+                {
+                    "zones": [
+                        {
+                            "id": data[0],
+                            "duration": data[1],
+                            "sortOrder": count,
+                        }
+                        for (count, data) in enumerate(self.zones, 1)
+                    ]
+                }
+            ),
         )
