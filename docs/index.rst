@@ -44,7 +44,7 @@ Dependencies
 ============
 
 - Python 3.6+
-- httplib2
+- requests
 
 Authors and License
 ===================
