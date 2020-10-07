@@ -2,9 +2,7 @@
 from setuptools import find_packages, setup
 from datetime import datetime
 
-NOW = datetime.now().strftime("%m%d%Y%H%M%S")
-
-VERSION = f"1.0.2-dev{NOW}"
+VERSION = "1.0.1"
 
 GITHUB_USERNAME = "rfverbruggen"
 GITHUB_REPOSITORY = "rachiopy"
