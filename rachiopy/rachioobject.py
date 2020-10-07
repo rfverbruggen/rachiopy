@@ -4,6 +4,7 @@ import json
 from requests import Session
 
 _API_URL = "https://api.rach.io/1/public"
+_TIMEOUT = 25
 
 
 class RachioObject:
@@ -39,7 +40,7 @@ class RachioObject:
 
         url = f"{_API_URL}/{path}"
         response = self._http_session.request(
-            method, url, headers=self._headers, data=body
+            method, url, headers=self._headers, data=body, timeout=_TIMEOUT
         )
 
         content_type = response.headers.get("content-type")
