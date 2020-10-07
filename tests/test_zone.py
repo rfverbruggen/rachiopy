@@ -100,7 +100,7 @@ class TestZoneMethods(unittest.TestCase):
                         }
                         for (count, data) in enumerate(self.zones, 1)
                     ]
-                },
+                }
             ),
         )
 
