@@ -1,4 +1,5 @@
 """RachioObject module containing a helper class for all API calls."""
+import json
 
 from requests import Session
 
@@ -33,6 +34,9 @@ class RachioObject:
             object if it contains JSON).
         :rtype: tuple
         """
+        if body is not None:
+            body = json.dumps(body)
+
         url = f"{_API_URL}/{path}"
         response = self._http_session.request(
             method, url, headers=self._headers, data=body

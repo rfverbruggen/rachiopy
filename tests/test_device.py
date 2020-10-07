@@ -2,6 +2,7 @@
 
 import unittest
 import uuid
+import json
 from unittest.mock import patch
 from random import randrange
 
@@ -24,7 +25,7 @@ class TestDeviceMethods(unittest.TestCase):
         """Test if the get method works as expected."""
         mock.return_value = RESPONSE200
 
-        deviceid = uuid.uuid4()
+        deviceid = str(uuid.uuid4())
 
         self.device.get(deviceid)
 
@@ -42,7 +43,7 @@ class TestDeviceMethods(unittest.TestCase):
         """Test if the current schedule method works as expected."""
         mock.return_value = RESPONSE200
 
-        deviceid = uuid.uuid4()
+        deviceid = str(uuid.uuid4())
 
         self.device.current_schedule(deviceid)
 
@@ -60,7 +61,7 @@ class TestDeviceMethods(unittest.TestCase):
         """Test if the event method works as expected."""
         mock.return_value = RESPONSE200
 
-        deviceid = uuid.uuid4()
+        deviceid = str(uuid.uuid4())
         starttime = 1414818000000
         endtime = 1415739608103
 
@@ -84,7 +85,7 @@ class TestDeviceMethods(unittest.TestCase):
         """Test if the forecast method works as expected."""
         mock.return_value = RESPONSE200
 
-        deviceid = uuid.uuid4()
+        deviceid = str(uuid.uuid4())
 
         self.device.forecast(deviceid)
 
@@ -128,7 +129,7 @@ class TestDeviceMethods(unittest.TestCase):
         """Test if the stop water method works as expected."""
         mock.return_value = RESPONSE204
 
-        deviceid = uuid.uuid4()
+        deviceid = str(uuid.uuid4())
 
         self.device.stop_water(deviceid)
 
@@ -139,14 +140,14 @@ class TestDeviceMethods(unittest.TestCase):
             args[1], f"{BASE_API_URL}/device/stop_water",
         )
         self.assertEqual(args[0], "PUT")
-        self.assertEqual(kwargs["data"], {"id": deviceid})
+        self.assertEqual(kwargs["data"], json.dumps({"id": deviceid}))
 
     @patch("requests.Session.request")
     def test_rain_delay(self, mock):
         """Test if the rain delay method works as expected."""
         mock.return_value = RESPONSE204
 
-        deviceid = uuid.uuid4()
+        deviceid = str(uuid.uuid4())
         duration = randrange(604800)
 
         self.device.rain_delay(deviceid, duration)
@@ -159,7 +160,7 @@ class TestDeviceMethods(unittest.TestCase):
         )
         self.assertEqual(args[0], "PUT")
         self.assertEqual(
-            kwargs["data"], {"id": deviceid, "duration": duration}
+            kwargs["data"], json.dumps({"id": deviceid, "duration": duration})
         )
 
         # Check that values should be within range.
@@ -173,7 +174,7 @@ class TestDeviceMethods(unittest.TestCase):
         """Test if the turn on method works as expected."""
         mock.return_value = RESPONSE204
 
-        deviceid = uuid.uuid4()
+        deviceid = str(uuid.uuid4())
 
         self.device.turn_on(deviceid)
 
@@ -184,14 +185,14 @@ class TestDeviceMethods(unittest.TestCase):
             args[1], f"{BASE_API_URL}/device/on",
         )
         self.assertEqual(args[0], "PUT")
-        self.assertEqual(kwargs["data"], {"id": deviceid})
+        self.assertEqual(kwargs["data"], json.dumps({"id": deviceid}))
 
     @patch("requests.Session.request")
     def test_turn_off(self, mock):
         """Test if the turn off method works as expected."""
         mock.return_value = RESPONSE204
 
-        deviceid = uuid.uuid4()
+        deviceid = str(uuid.uuid4())
 
         self.device.turn_off(deviceid)
 
@@ -202,14 +203,14 @@ class TestDeviceMethods(unittest.TestCase):
             args[1], f"{BASE_API_URL}/device/off",
         )
         self.assertEqual(args[0], "PUT")
-        self.assertEqual(kwargs["data"], {"id": deviceid})
+        self.assertEqual(kwargs["data"], json.dumps({"id": deviceid}))
 
     @patch("requests.Session.request")
     def test_pause_zone_run(self, mock):
         """Test if the pause zone run method works as expected."""
         mock.return_value = RESPONSE204
 
-        deviceid = uuid.uuid4()
+        deviceid = str(uuid.uuid4())
         duration = randrange(3600)
 
         self.device.pause_zone_run(deviceid, duration)
@@ -222,7 +223,7 @@ class TestDeviceMethods(unittest.TestCase):
         )
         self.assertEqual(args[0], "PUT")
         self.assertEqual(
-            kwargs["data"], {"id": deviceid, "duration": duration}
+            kwargs["data"], json.dumps({"id": deviceid, "duration": duration})
         )
 
         # Check that values should be within range.
@@ -238,7 +239,7 @@ class TestDeviceMethods(unittest.TestCase):
         """Test if the resume zone run method works as expected."""
         mock.return_value = RESPONSE204
 
-        deviceid = uuid.uuid4()
+        deviceid = str(uuid.uuid4())
 
         self.device.resume_zone_run(deviceid)
 
@@ -249,4 +250,4 @@ class TestDeviceMethods(unittest.TestCase):
             args[1], f"{BASE_API_URL}/device/resume_zone_run",
         )
         self.assertEqual(args[0], "PUT")
-        self.assertEqual(kwargs["data"], {"id": deviceid})
+        self.assertEqual(kwargs["data"], json.dumps({"id": deviceid}))
