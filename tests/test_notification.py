@@ -3,6 +3,7 @@
 import unittest
 from unittest.mock import patch
 import uuid
+import json
 
 from rachiopy import Notification
 from tests.constants import BASE_API_URL, AUTHTOKEN, RESPONSE200, RESPONSE204
@@ -39,7 +40,7 @@ class TestNotificationMethods(unittest.TestCase):
         """Test if the get device webhook method works as expected."""
         mock.return_value = RESPONSE200
 
-        deviceid = uuid.uuid4()
+        deviceid = str(uuid.uuid4())
 
         self.notification.get_device_webhook(deviceid)
 
@@ -57,7 +58,7 @@ class TestNotificationMethods(unittest.TestCase):
         """Test if the add method works as expected."""
         mock.return_value = RESPONSE200
 
-        deviceid = uuid.uuid4()
+        deviceid = str(uuid.uuid4())
         externalid = "Test ID"
         url = "https://www.mydomain.com/another_webhook_new_url"
         eventtypes = [{"id": "1"}, {"id": "2"}]
@@ -71,12 +72,14 @@ class TestNotificationMethods(unittest.TestCase):
         self.assertEqual(args[0], "POST")
         self.assertEqual(
             kwargs["data"],
-            {
-                "device": {"id": deviceid},
-                "externalId": externalid,
-                "url": url,
-                "eventTypes": eventtypes,
-            },
+            json.dumps(
+                {
+                    "device": {"id": deviceid},
+                    "externalId": externalid,
+                    "url": url,
+                    "eventTypes": eventtypes,
+                }
+            ),
         )
 
     @patch("requests.Session.request")
@@ -84,7 +87,7 @@ class TestNotificationMethods(unittest.TestCase):
         """Test if the update method works as expected."""
         mock.return_value = RESPONSE200
 
-        hookid = uuid.uuid4()
+        hookid = str(uuid.uuid4())
         externalid = "Test ID"
         url = "https://www.mydomain.com/another_webhook_new_url"
         eventtypes = [{"id": "1"}, {"id": "2"}]
@@ -98,12 +101,14 @@ class TestNotificationMethods(unittest.TestCase):
         self.assertEqual(args[0], "PUT")
         self.assertEqual(
             kwargs["data"],
-            {
-                "id": hookid,
-                "externalId": externalid,
-                "url": url,
-                "eventTypes": eventtypes,
-            },
+            json.dumps(
+                {
+                    "id": hookid,
+                    "externalId": externalid,
+                    "url": url,
+                    "eventTypes": eventtypes,
+                }
+            ),
         )
 
     @patch("requests.Session.request")
@@ -111,7 +116,7 @@ class TestNotificationMethods(unittest.TestCase):
         """Test if the delete method works as expected."""
         mock.return_value = RESPONSE204
 
-        hookid = uuid.uuid4()
+        hookid = str(uuid.uuid4())
 
         self.notification.delete(hookid)
 
@@ -129,7 +134,7 @@ class TestNotificationMethods(unittest.TestCase):
         """Test if the get method works as expected."""
         mock.return_value = RESPONSE200
 
-        hookid = uuid.uuid4()
+        hookid = str(uuid.uuid4())
 
         self.notification.get(hookid)
 
