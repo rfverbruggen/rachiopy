@@ -31,7 +31,7 @@ setup(
     description="A Python module for the Rachio API.",
     platforms="Cross Platform",
     classifiers=[
-        "Development Status :: 4 - Beta",
+        "Development Status :: 5 - Production/Stable",
         "Intended Audience :: Developers",
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
