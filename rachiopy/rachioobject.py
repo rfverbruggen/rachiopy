@@ -18,7 +18,7 @@ class RachioObject:
         :param http_session: The HTTP Session
         :type http_session: Session
 
-        :param timeout: How long to wait for the server to send data before 
+        :param timeout: How long to wait for the server to send data before
             giving up, as a float, or a (connect timeout, read timeout) tuple.
         :type timeout: float
         :type timeout: tuple
