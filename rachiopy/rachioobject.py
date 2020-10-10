@@ -9,7 +9,7 @@ _API_URL = "https://api.rach.io/1/public"
 class RachioObject:
     """The Rachio base object."""
 
-    def __init__(self, authtoken: str, http_session=None):
+    def __init__(self, authtoken: str, http_session=None, timeout=25):
         """Rachioobject class initializer.
 
         :param authtoken: The API authentication token.
@@ -17,6 +17,11 @@ class RachioObject:
 
         :param http_session: The HTTP Session
         :type http_session: Session
+
+        :param timeout: How long to wait for the server to send data before
+            giving up, as a float, or a (connect timeout, read timeout) tuple.
+        :type timeout: float
+        :type timeout: tuple
         """
         self.authtoken = authtoken
         self._headers = {
@@ -24,6 +29,7 @@ class RachioObject:
             "Authorization": f"Bearer {authtoken}",
         }
         self._http_session = http_session or Session()
+        self.timeout = timeout
 
     def _request(self, path: str, method: str, body=None):
         """Make a request from the API.
@@ -39,7 +45,7 @@ class RachioObject:
 
         url = f"{_API_URL}/{path}"
         response = self._http_session.request(
-            method, url, headers=self._headers, data=body
+            method, url, headers=self._headers, data=body, timeout=self.timeout
         )
 
         content_type = response.headers.get("content-type")
