@@ -48,7 +48,7 @@ class TestNotificationMethods(unittest.TestCase):
 
         # Check that the mock function is called with the rights args.
         self.assertEqual(
-            args[1], f"{BASE_API_URL}/notification/" f"{deviceid}/webhook"
+            args[1], f"{BASE_API_URL}/notification/{deviceid}/webhook"
         )
         self.assertEqual(args[0], "GET")
         self.assertEqual(kwargs["data"], None)
@@ -124,7 +124,7 @@ class TestNotificationMethods(unittest.TestCase):
 
         # Check that the mock function is called with the rights args.
         self.assertEqual(
-            args[1], f"{BASE_API_URL}/notification/webhook/" f"{hookid}"
+            args[1], f"{BASE_API_URL}/notification/webhook/{hookid}"
         )
         self.assertEqual(args[0], "DELETE")
         self.assertEqual(kwargs["data"], None)
@@ -142,7 +142,7 @@ class TestNotificationMethods(unittest.TestCase):
 
         # Check that the mock function is called with the rights args.
         self.assertEqual(
-            args[1], f"{BASE_API_URL}/notification/webhook/" f"{hookid}"
+            args[1], f"{BASE_API_URL}/notification/webhook/{hookid}"
         )
         self.assertEqual(args[0], "GET")
         self.assertEqual(kwargs["data"], None)

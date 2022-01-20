@@ -32,7 +32,7 @@ class TestFlexScheduleRuleMethods(unittest.TestCase):
         # Check that the mock function is called with the rights args.
         self.assertEqual(
             args[1],
-            f"{BASE_API_URL}/flexschedulerule/" f"{flexscheduleruleid}",
+            f"{BASE_API_URL}/flexschedulerule/{flexscheduleruleid}",
         )
         self.assertEqual(args[0], "GET")
         self.assertEqual(kwargs["data"], None)
