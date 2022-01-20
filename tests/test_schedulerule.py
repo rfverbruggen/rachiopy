@@ -32,7 +32,7 @@ class TestScheduleRuleMethods(unittest.TestCase):
 
         # Check that the mock function is called with the rights args.
         self.assertEqual(
-            args[1], f"{BASE_API_URL}/schedulerule/" f"{scheduleruleid}"
+            args[1], f"{BASE_API_URL}/schedulerule/{scheduleruleid}"
         )
         self.assertEqual(args[0], "GET")
         self.assertEqual(kwargs["data"], None)

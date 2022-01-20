@@ -33,7 +33,7 @@ class TestDeviceMethods(unittest.TestCase):
 
         # Check that the mock function is called with the rights args.
         self.assertEqual(
-            args[1], f"{BASE_API_URL}/device/" f"{deviceid}",
+            args[1], f"{BASE_API_URL}/device/{deviceid}",
         )
         self.assertEqual(args[0], "GET")
         self.assertEqual(kwargs["data"], None)
@@ -49,9 +49,9 @@ class TestDeviceMethods(unittest.TestCase):
 
         args, kwargs = mock.call_args
 
-        # Check that the mock funciton is called with the rights args.
+        # Check that the mock function is called with the rights args.
         self.assertEqual(
-            args[1], f"{BASE_API_URL}/device/" f"{deviceid}/current_schedule",
+            args[1], f"{BASE_API_URL}/device/{deviceid}/current_schedule",
         )
         self.assertEqual(args[0], "GET")
         self.assertEqual(kwargs["data"], None)
@@ -69,7 +69,7 @@ class TestDeviceMethods(unittest.TestCase):
 
         args, kwargs = mock.call_args
 
-        # Check that the mock funciton is called with the rights args.
+        # Check that the mock function is called with the rights args.
         self.assertEqual(
             args[1],
             f"{BASE_API_URL}/device/"
@@ -91,9 +91,9 @@ class TestDeviceMethods(unittest.TestCase):
 
         args, kwargs = mock.call_args
 
-        # Check that the mock funciton is called with the rights args.
+        # Check that the mock function is called with the rights args.
         self.assertEqual(
-            args[1], f"{BASE_API_URL}/device/" f"{deviceid}/forecast?units=US",
+            args[1], f"{BASE_API_URL}/device/{deviceid}/forecast?units=US",
         )
         self.assertEqual(args[0], "GET")
         self.assertEqual(kwargs["data"], None)
@@ -102,9 +102,9 @@ class TestDeviceMethods(unittest.TestCase):
 
         args, kwargs = mock.call_args
 
-        # Check that the mock funciton is called with the rights args.
+        # Check that the mock function is called with the rights args.
         self.assertEqual(
-            args[1], f"{BASE_API_URL}/device/" f"{deviceid}/forecast?units=US",
+            args[1], f"{BASE_API_URL}/device/{deviceid}/forecast?units=US",
         )
         self.assertEqual(args[0], "GET")
         self.assertEqual(kwargs["data"], None)
@@ -113,10 +113,10 @@ class TestDeviceMethods(unittest.TestCase):
 
         args, kwargs = mock.call_args
 
-        # Check that the mock funciton is called with the rights args.
+        # Check that the mock function is called with the rights args.
         self.assertEqual(
             args[1],
-            f"{BASE_API_URL}/device/" f"{deviceid}/forecast?units=METRIC",
+            f"{BASE_API_URL}/device/{deviceid}/forecast?units=METRIC",
         )
         self.assertEqual(args[0], "GET")
         self.assertEqual(kwargs["data"], None)
@@ -135,7 +135,7 @@ class TestDeviceMethods(unittest.TestCase):
 
         args, kwargs = mock.call_args
 
-        # Check that the mock funciton is called with the rights args.
+        # Check that the mock function is called with the rights args.
         self.assertEqual(
             args[1], f"{BASE_API_URL}/device/stop_water",
         )
@@ -154,7 +154,7 @@ class TestDeviceMethods(unittest.TestCase):
 
         args, kwargs = mock.call_args
 
-        # Check that the mock funciton is called with the rights args.
+        # Check that the mock function is called with the rights args.
         self.assertEqual(
             args[1], f"{BASE_API_URL}/device/rain_delay",
         )
@@ -180,7 +180,7 @@ class TestDeviceMethods(unittest.TestCase):
 
         args, kwargs = mock.call_args
 
-        # Check that the mock funciton is called with the rights args.
+        # Check that the mock function is called with the rights args.
         self.assertEqual(
             args[1], f"{BASE_API_URL}/device/on",
         )
@@ -198,7 +198,7 @@ class TestDeviceMethods(unittest.TestCase):
 
         args, kwargs = mock.call_args
 
-        # Check that the mock funciton is called with the rights args.
+        # Check that the mock function is called with the rights args.
         self.assertEqual(
             args[1], f"{BASE_API_URL}/device/off",
         )
@@ -217,7 +217,7 @@ class TestDeviceMethods(unittest.TestCase):
 
         args, kwargs = mock.call_args
 
-        # Check that the mock funciton is called with the rights args.
+        # Check that the mock function is called with the rights args.
         self.assertEqual(
             args[1], f"{BASE_API_URL}/device/pause_zone_run",
         )
@@ -245,7 +245,7 @@ class TestDeviceMethods(unittest.TestCase):
 
         args, kwargs = mock.call_args
 
-        # Check that the mock funciton is called with the rights args.
+        # Check that the mock function is called with the rights args.
         self.assertEqual(
             args[1], f"{BASE_API_URL}/device/resume_zone_run",
         )
