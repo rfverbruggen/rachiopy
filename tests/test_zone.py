@@ -46,7 +46,7 @@ class TestZoneMethods(unittest.TestCase):
         args, kwargs = mock.call_args
 
         # Check that the mock function is called with the rights args.
-        self.assertEqual(args[1], f"{BASE_API_URL}/zone/" f"{zoneid}")
+        self.assertEqual(args[1], f"{BASE_API_URL}/zone/{zoneid}")
         self.assertEqual(args[0], "GET")
         self.assertEqual(kwargs["data"], None)
 
