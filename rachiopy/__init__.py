@@ -15,6 +15,7 @@ from rachiopy.program import Program
 class Rachio(RachioObject):
     """Object representing the Rachio API."""
 
+    # pylint: disable=too-many-instance-attributes
     def __init__(self, authtoken: str):
         """Initialze the Rachio API wrapper.
 
