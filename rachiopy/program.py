@@ -7,9 +7,9 @@ class Program(RachioObject):
     """Program class for the smart hose timer."""
 
     def list_programs(self, valve_id: str):
-        """Retreive the list of programs (schedules) for a valve."""
+        """Retreive the list of programs (schedules) for a valve.
 
-        """For more info of the content in the response see:
+        For more info of the content in the response see:
         https://rachio.readme.io/docs/programservice_listprograms
 
         :param valve_id: Valve's unique id
