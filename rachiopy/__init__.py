@@ -7,6 +7,9 @@ from rachiopy.flexschedulerule import FlexSchedulerule
 from rachiopy.notification import Notification
 from rachiopy.schedulerule import Schedulerule
 from rachiopy.zone import Zone
+from rachiopy.valve import Valve
+from rachiopy.summary import SummaryServce
+from rachiopy.program import Program
 
 
 class Rachio(RachioObject):
@@ -25,3 +28,6 @@ class Rachio(RachioObject):
         self.notification = Notification(authtoken)
         self.schedulerule = Schedulerule(authtoken)
         self.zone = Zone(authtoken)
+        self.valve = Valve(authtoken)
+        self.summary = SummaryServce(authtoken)
+        self.program = Program(authtoken)
