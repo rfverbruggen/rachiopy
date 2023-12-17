@@ -33,7 +33,7 @@ class TestProgramMethods(unittest.TestCase):
         # Check that the mock function is called with the rights args.
         self.assertEqual(
             args[1], f"{VALVE_API_URL}/program/listPrograms/{valveid}"
-            )
+        )
         self.assertEqual(args[0], "GET")
         self.assertEqual(kwargs["data"], None)
 
@@ -51,7 +51,7 @@ class TestProgramMethods(unittest.TestCase):
         # Check that the mock function is called with the rights args.
         self.assertEqual(
             args[1], f"{VALVE_API_URL}/program/getProgram/{programid}"
-            )
+        )
         self.assertEqual(args[0], "GET")
         self.assertEqual(kwargs["data"], None)
 
@@ -70,11 +70,11 @@ class TestProgramMethods(unittest.TestCase):
         # Check that the mock function is called with the rights args.
         self.assertEqual(
             args[1], f"{VALVE_API_URL}/program/createSkipOverrides"
-            )
+        )
         self.assertEqual(args[0], "POST")
         self.assertEqual(
             kwargs["data"],
-            json.dumps({"programId": programid, "timestamp": timestamp})
+            json.dumps({"programId": programid, "timestamp": timestamp}),
         )
 
     @patch("requests.Session.request")
@@ -92,9 +92,9 @@ class TestProgramMethods(unittest.TestCase):
         # Check that the mock function is called with the rights args.
         self.assertEqual(
             args[1], f"{VALVE_API_URL}/program/deleteSkipOverrides"
-            )
+        )
         self.assertEqual(args[0], "POST")
         self.assertEqual(
             kwargs["data"],
-            json.dumps({"programId": programid, "timestamp": timestamp})
+            json.dumps({"programId": programid, "timestamp": timestamp}),
         )

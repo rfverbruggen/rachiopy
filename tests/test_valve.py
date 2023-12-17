@@ -49,9 +49,8 @@ class TestValveMethods(unittest.TestCase):
 
         # Check that the mock function is called with the rights args.
         self.assertEqual(
-            args[1],
-            f"{VALVE_API_URL}/valve/getBaseStation/{baseid}"
-            )
+            args[1], f"{VALVE_API_URL}/valve/getBaseStation/{baseid}"
+        )
         self.assertEqual(args[0], "GET")
         self.assertEqual(kwargs["data"], None)
 
@@ -68,9 +67,8 @@ class TestValveMethods(unittest.TestCase):
 
         # Check that the mock function is called with the rights args.
         self.assertEqual(
-            args[1],
-            f"{VALVE_API_URL}/valve/listBaseStations/{userid}"
-            )
+            args[1], f"{VALVE_API_URL}/valve/listBaseStations/{userid}"
+        )
         self.assertEqual(args[0], "GET")
         self.assertEqual(kwargs["data"], None)
 
@@ -107,16 +105,18 @@ class TestValveMethods(unittest.TestCase):
         self.assertEqual(args[0], "PUT")
         self.assertEqual(
             kwargs["data"],
-            json.dumps({"valveId": valveid, "defaultRuntimeSeconds": duration})
+            json.dumps(
+                {"valveId": valveid, "defaultRuntimeSeconds": duration}
+            ),
         )
 
         # Check that values should be within range.
         self.assertRaises(
             AssertionError, self.valve.start_watering, valveid, -1
-            )
+        )
         self.assertRaises(
             AssertionError, self.valve.start_watering, valveid, 86401
-            )
+        )
 
     @patch("requests.Session.request")
     def test_start_watering(self, mock):
@@ -135,16 +135,16 @@ class TestValveMethods(unittest.TestCase):
         self.assertEqual(args[0], "PUT")
         self.assertEqual(
             kwargs["data"],
-            json.dumps({"valveId": valveid, "durationSeconds": duration})
+            json.dumps({"valveId": valveid, "durationSeconds": duration}),
         )
 
         # Check that values should be within range.
         self.assertRaises(
             AssertionError, self.valve.start_watering, valveid, -1
-            )
+        )
         self.assertRaises(
             AssertionError, self.valve.start_watering, valveid, 86401
-            )
+        )
 
     @patch("requests.Session.request")
     def test_stop_watering(self, mock):
@@ -160,6 +160,4 @@ class TestValveMethods(unittest.TestCase):
         # Check that the mock function is called with the rights args.
         self.assertEqual(args[1], f"{VALVE_API_URL}/valve/stopWatering")
         self.assertEqual(args[0], "PUT")
-        self.assertEqual(
-            kwargs["data"], json.dumps({"valveId": valveid})
-        )
+        self.assertEqual(kwargs["data"], json.dumps({"valveId": valveid}))

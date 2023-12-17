@@ -41,7 +41,7 @@ class TestSummaryMethod(unittest.TestCase):
                 {
                     "resourceId": {"baseStationId": deviceid},
                     "start": start,
-                    "end": end
+                    "end": end,
                 }
-                )
-            )
+            ),
+        )
