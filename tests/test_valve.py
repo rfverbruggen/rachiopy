@@ -110,12 +110,21 @@ class TestValveMethods(unittest.TestCase):
             ),
         )
 
+    @patch("requests.Session.request")
+    def test_set_default_runtime_exception(self, mock):
+        """Test if the set_default_runtime method catches incorrect values."""
+        mock.return_value = RESPONSE200
+
+        valveid = str(uuid.uuid4())
+        duration1 = randrange(-50, -1)
+        duration2 = randrange(86401, 86500)
+
         # Check that values should be within range.
         self.assertRaises(
-            AssertionError, self.valve.start_watering, valveid, -1
+            AssertionError, self.valve.start_watering, valveid, duration1
         )
         self.assertRaises(
-            AssertionError, self.valve.start_watering, valveid, 86401
+            AssertionError, self.valve.start_watering, valveid, duration2
         )
 
     @patch("requests.Session.request")
@@ -138,12 +147,21 @@ class TestValveMethods(unittest.TestCase):
             json.dumps({"valveId": valveid, "durationSeconds": duration}),
         )
 
+    @patch("requests.Session.request")
+    def test_start_watering_exception(self, mock):
+        """Test if the start_watering method catches incorrect values."""
+        mock.return_value = RESPONSE204
+
+        valveid = str(uuid.uuid4())
+        duration1 = randrange(-50, -1)
+        duration2 = randrange(86401, 86500)
+
         # Check that values should be within range.
         self.assertRaises(
-            AssertionError, self.valve.start_watering, valveid, -1
+            AssertionError, self.valve.start_watering, valveid, duration1
         )
         self.assertRaises(
-            AssertionError, self.valve.start_watering, valveid, 86401
+            AssertionError, self.valve.start_watering, valveid, duration2
         )
 
     @patch("requests.Session.request")

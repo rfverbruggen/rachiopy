@@ -33,7 +33,7 @@ class RachioObject:
         self.timeout = timeout
 
     def _request(self, path: str, method: str, body=None):
-        """Make a request from the API.
+        """Make a request to the API.
 
         :return: The return value is a tuple of (response, content), the first
             being and instance of the httplib2.Response class, the second
@@ -103,7 +103,7 @@ class RachioObject:
         return self._request(path, "DELETE", body)
 
     def _valve_request(self, path: str, method: str, body=None):
-        """Make a request from the API.
+        """Make a request to the API.
 
         :return: The return value is a tuple of (response, content), the first
             being and instance of the httplib2.Response class, the second
