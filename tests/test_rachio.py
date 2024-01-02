@@ -19,3 +19,6 @@ class TestRachioMethods(unittest.TestCase):
         self.assertEqual(rachio.schedulerule.authtoken, AUTHTOKEN)
         self.assertEqual(rachio.flexschedulerule.authtoken, AUTHTOKEN)
         self.assertEqual(rachio.notification.authtoken, AUTHTOKEN)
+        self.assertEqual(rachio.valve.authtoken, AUTHTOKEN)
+        self.assertEqual(rachio.summary.authtoken, AUTHTOKEN)
+        self.assertEqual(rachio.program.authtoken, AUTHTOKEN)
