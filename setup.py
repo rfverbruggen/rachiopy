@@ -17,6 +17,11 @@ PROJECT_URLS = {"Bug Reports": f"{GITHUB_URL}/issues"}
 
 PACKAGES = find_packages(exclude=["tests", "tests.*"])
 
+# read the contents of your README file
+from pathlib import Path
+this_directory = Path(__file__).parent
+long_description = (this_directory / "README.md").read_text()
+
 setup(
     name="RachioPy",
     version=VERSION,
@@ -29,6 +34,8 @@ setup(
     project_urls=PROJECT_URLS,
     license="MIT",
     description="A Python module for the Rachio API.",
+    long_description=long_description,
+    long_description_content_type='text/markdown',
     platforms="Cross Platform",
     classifiers=[
         "Development Status :: 5 - Production/Stable",
