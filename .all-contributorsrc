@@ -1,0 +1,28 @@
+{
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": false,
+  "commitType": "docs",
+  "commitConvention": "angular",
+  "contributors": [
+    {
+      "login": "brg468",
+      "name": "Brian Rogers",
+      "avatar_url": "https://avatars.githubusercontent.com/u/19143191?v=4",
+      "profile": "https://github.com/brg468",
+      "contributions": [
+        "code",
+        "doc",
+        "test"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7,
+  "skipCi": true,
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "projectName": "rachiopy",
+  "projectOwner": "rfverbruggen"
+}

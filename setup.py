@@ -1,7 +1,11 @@
 """Rachiopy setup script."""
 from setuptools import find_packages, setup
+from datetime import datetime
+from pathlib import Path
 
-VERSION = "1.0.3"
+NOW = datetime.now().strftime("%m%d%Y%H%M%S")
+
+VERSION = "1.1.0"
 
 GITHUB_USERNAME = "rfverbruggen"
 GITHUB_REPOSITORY = "rachiopy"
@@ -13,6 +17,10 @@ DOWNLOAD_URL = f"{GITHUB_URL}/archive/{VERSION}.tar.gz"
 PROJECT_URLS = {"Bug Reports": f"{GITHUB_URL}/issues"}
 
 PACKAGES = find_packages(exclude=["tests", "tests.*"])
+
+# read the contents of your README file
+this_directory = Path(__file__).parent
+long_description = (this_directory / "README.md").read_text()
 
 setup(
     name="RachioPy",
@@ -26,6 +34,8 @@ setup(
     project_urls=PROJECT_URLS,
     license="MIT",
     description="A Python module for the Rachio API.",
+    long_description=long_description,
+    long_description_content_type='text/markdown',
     platforms="Cross Platform",
     classifiers=[
         "Development Status :: 5 - Production/Stable",
