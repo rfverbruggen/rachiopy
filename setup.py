@@ -5,7 +5,7 @@ from pathlib import Path
 
 NOW = datetime.now().strftime("%m%d%Y%H%M%S")
 
-VERSION = f"1.1.0"
+VERSION = "1.1.0"
 
 GITHUB_USERNAME = "rfverbruggen"
 GITHUB_REPOSITORY = "rachiopy"
