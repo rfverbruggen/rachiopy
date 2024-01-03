@@ -1,6 +1,7 @@
 """Rachiopy setup script."""
 from setuptools import find_packages, setup
 from datetime import datetime
+from pathlib import Path
 
 NOW = datetime.now().strftime("%m%d%Y%H%M%S")
 
@@ -18,7 +19,6 @@ PROJECT_URLS = {"Bug Reports": f"{GITHUB_URL}/issues"}
 PACKAGES = find_packages(exclude=["tests", "tests.*"])
 
 # read the contents of your README file
-from pathlib import Path
 this_directory = Path(__file__).parent
 long_description = (this_directory / "README.md").read_text()
 
